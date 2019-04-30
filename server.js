@@ -20,6 +20,14 @@ app.use(bodyParser.urlencoded({
 
 var port = process.env.PORT || 8080;
 
+//firebase setup
+var admin = require("firebase-admin");
+var serviceAccount = require("bhredz-firebase-adminsdk-7nele-5f8b818b8b.json");
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://bhredz.firebaseio.com"
+});
+
 //Needed to use partials folder
 hbs.registerPartials(__dirname + '/views/partials');
 
@@ -27,18 +35,15 @@ hbs.registerPartials(__dirname + '/views/partials');
 hbs.registerHelper('getCurrentYear', () => {
     return new Date().getFullYear();
 });
-
 //Helpers End
-
 
 app.set('view engine', 'hbs');
 app.use(express.static(__dirname + '/views'));
 
-
 app.get('/', (request, response) => {
     app.locals.user = false;
     var username = "";
-    if (fs.existsSync("./user_info.json")) {
+    firebase.auth().onAuthStateChanged(function(user) {
         var user_info = JSON.parse(fs.readFileSync('user_info.json'));
         app.locals.user = true;
         username = user_info.username
