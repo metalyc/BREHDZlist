@@ -1,7 +1,7 @@
 # AGILE_PROJECT
 Online Shoe Store
 
-This project contains three main features.
+This project contains six main features.
 1. Account creation and verification
 2. Connection to database to pull shoe 
     information into the shop page.
