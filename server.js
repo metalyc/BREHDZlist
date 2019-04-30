@@ -28,7 +28,6 @@ hbs.registerHelper('getCurrentYear', () => {
     return new Date().getFullYear();
 });
 
-
 //Helpers End
 
 
