@@ -1,37 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <title>{{title}}</title>
     {{>headinit}}
   </head>
-  <body>
-    {{>nav_bar}}
-
-    <img src="images/Logo.PNG"class="rounded mx-auto d-block" alt="logo">
-
-    <!--Jumbo-->
-    <div class="container">
-      <div class="jumbotron">
-        <h1 class="display-4">{{message}}</h1>
-        <hr class="my-4">
-        <p class="lead">
-          {{#if user}}
-          {{else}}
-            <a href="/login"><h1>Log in to start shopping</h1></a>
-          {{/if}}
-        </p>
+  <body class="d-flex flex-column h-100">
+    {{>navbar}}
+    <div class="container-fluid">
+      <div class="container mb-11">
+        <main class="flex-shrink-0">
+          <div class="jumbotron jumbotron-fluid">
+            <div class="container">
+              <h1 class="display-4">BREHDZlist</h1>
+              <a class="btn btn-primary" href="/products">Products</a>
+              <a class="btn btn-primary" href="/add">Add new</a>
+            </div>
+          </div>
+        </main>
       </div>
     </div>
-      <!--Jumbo-->
-
-      <div class="wrapper">
-
-      </div>
-
-      {{>footer}}
-    <br>
+    {{>footer}}
     {{>footinit}}
-
   </body>
 </html>
