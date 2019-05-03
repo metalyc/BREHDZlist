@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({
 
 //start server
 app.use(express.static(__dirname));
-var server = app.listen(8080, () => {
+var server = app.listen(process.env.PORT || 8080, () => {
   console.log('server is listening on prot',server.address().port);
 });
 
