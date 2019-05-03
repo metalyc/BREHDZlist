@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <title>{{title}}</title>
+      {{>headinit}}
+      <script src="/scripts/Add.js"></script>
+  </head>
+  <body>
+    {{>navbar}}
+    <form>
+      <label>Product Name:</label>
+      <input type="text" id="name">
+      <br>
+      <label>Location:</label>
+      <input type="text" id="location">
+      <br>
+      <label>Condition:</label>
+      <input type="text" id="condition">
+      <br>
+      <label>Price:</label>
+      <input type="text" id="price">
+      <br>
+      <button type="button" onclick="addData()">Submit</button>
+      <br>
+      <input type="file" id="fileButton">
+      <progress value="0" max="100" id="uploader">0%</progress>
+      <img src="" alt="image" id="holder">
+    </form>
+    {{>footer}}
+    {{>footinit}}
+  </body>
+</html>
