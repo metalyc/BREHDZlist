@@ -27,7 +27,6 @@ function adduser(){
       console.log("Error: "+ error.message);
       console.log("User added");
     });
-    response.render('home.hbs');
   };
 };
 
