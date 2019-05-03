@@ -1,7 +1,3 @@
-console.log('add.js linked')
-
-//get references to th 3 html elments on the page
-
 var holder = document.getElementById("holder");
 //get a ref to Firebase Storage
 var storage = firebase.storage();
