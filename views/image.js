@@ -18,7 +18,6 @@ function addData(name, price, condition, location, image)
     var db = firebase.firestore();
 
 
-
     //alert(name);
     var thename = name;
     var theprice = price;
