@@ -15,7 +15,6 @@ var app = express();
 
 
 
-
 app.use(session({ secret: 'krunal', resave: false, saveUninitialized: true }));
 app.use(expressValidator());
 app.use(bodyParser.json());
