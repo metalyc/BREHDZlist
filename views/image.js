@@ -45,7 +45,7 @@ function addData(name, price, condition, location, image)
 
     function getImageForPath(p){
         global.XMLHttpRequest = require('xhr2');
-        
+
 
         var storageRef = firebase.storage().ref();
         var spaceRef = storageRef.child(p);
