@@ -76,11 +76,11 @@ function imageUpload()
                 //filename = file.name;
                 alert("upload complete");
                 //console.log(file.name);
-                window.path=file.name;
+                //window.path=file.name;
 
             }
         );
-        console.log(window.path);
+        //console.log(window.path);
 
     });
 }

@@ -1,5 +1,5 @@
 //const MongoClient = require('mongodb').MongoClient;
-const utils = require('./server_utils/mongo_util.js');
+//const utils = require('./server_utils/mongo_util.js');
 const express = require('express');
 const session = require('express-session');
 const hbs = require('hbs');
@@ -402,7 +402,7 @@ app.post('/firebase', function(request, response) {
 app.post('/firebase', function(request, response)
 {
     var name=request.body.name;
-    var price=request.body.pric;
+    var price=request.body.price;
     var condition=request.body.condition;
     var location=request.body.location;
     var img = request.body.something;
