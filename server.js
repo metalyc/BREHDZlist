@@ -1,4 +1,4 @@
-const MongoClient = require('mongodb').MongoClient;
+//const MongoClient = require('mongodb').MongoClient;
 const utils = require('./server_utils/mongo_util.js');
 const express = require('express');
 const session = require('express-session');
@@ -7,9 +7,14 @@ const bodyParser = require('body-parser');
 const url = require('url');
 const fs = require('fs');
 const expressValidator = require('express-validator');
-const cookieParser = require('cookie-parser');
-var ObjectId = require('mongodb').ObjectID;
+//const cookieParser = require('cookie-parser');
+//var ObjectId = require('mongodb').ObjectID;
+const add = require('./views/image.js');
 var app = express();
+
+
+
+
 
 app.use(session({ secret: 'krunal', resave: false, saveUninitialized: true }));
 app.use(expressValidator());
@@ -28,12 +33,32 @@ hbs.registerHelper('getCurrentYear', () => {
     return new Date().getFullYear();
 });
 
+
 //Helpers End
 
 
 app.set('view engine', 'hbs');
 app.use(express.static(__dirname + '/views'));
 
+
+
+function hello()
+{
+    console.log('hello');
+    var db = firebase.firestore();
+    db.collection("Abc").get().then((querySnapshot) => {
+        //commentdisplay.innerHTML = "";
+        var snap = '';
+        //var querySnapshot1 = querySnapshot;
+        querySnapshot.forEach((doc) => {
+            snap += doc.data().A;
+            console.log(snap);
+            console.log('Something');
+        })
+
+
+    });
+}
 
 app.get('/', (request, response) => {
     app.locals.user = false;
@@ -83,6 +108,7 @@ app.get('/my_cart', (request, response) => {
 
 //
 //Shop page
+
 
 
 app.get('/shop', (request, response) => {
@@ -217,8 +243,8 @@ app.post('/insert_login', (request, response) => {
             response.render('login.hbs', {
                 message: 'Account does not exist'
             })
-        } else if (user && user.email != '') {
-            if (pwd == user.pwd) {
+        } else if (user && user.email !== '') {
+            if (pwd === user.pwd) {
                 response.redirect('/');
                 user_info = {
                     username: user.email,
@@ -232,7 +258,7 @@ app.post('/insert_login', (request, response) => {
                     email: user.email
                 });
             }
-        } else if (email == '') {
+        } else if (email === '') {
             response.render('login.hbs', {
                 message: 'E-mail can\'t be blank'
             });
@@ -323,7 +349,72 @@ app.post('/delete-item', (request, response) => {
     response.redirect('/my_cart')
 });
 
+//var utils = require('utils');
+/*
+app.post('/firebase', function(request, response) {
+    //var price = document.getElementById("price").value;
+    //var location = document.getElementById("location").value;
+    //var condition = document.getElementById("condition").value;
+
+    var price=request.body.price;
+    var name=request.body.name;
+    var condition=request.body.condition;
+    var location=request.body.location;
+
+    console.log(price);
+
+    var db = firebase.firestore();
+
+    function getImageForPath(p){
+        var storageRef = firebase.storage().ref();
+        var spaceRef = storageRef.child(p);
+
+        storageRef.child(p).getDownloadURL().then(function(url) {
+            var fullurl = url;
+            db.collection("Products").add({
+                    Price: price,
+                    Name: name,
+                    Location: location,
+                    Condition: condition,
+                    Img: fullurl
+                }
+            )
+                .then(function(docRef) {
+                    console.log("Document written with ID: ", docRef.id);
+                    //update the products view
+                    //getProducts();
+                })
+                .catch(function(error) {
+                    console.error("Error adding document: ", error);
+                });
+        }).catch(function(error) {
+            //catch error here
+        });
+    }
+    getImageForPath('images/'+'tv.jpg');
+
+    response.redirect('/');
+
+});
+*/
+
+
+app.post('/firebase', function(request, response)
+{
+    var name=request.body.name;
+    var price=request.body.pric;
+    var condition=request.body.condition;
+    var location=request.body.location;
+    var img = request.body.something;
+
+    console.log('Image is: ', request.body);
+
+
+    add.addData(name, price, condition, location, img);
+    response.redirect('/');
+});
+
 app.listen(port, () => {
     console.log(`Server is up on port ${port}`);
-    utils.init();
+//    utils.init();
 });
