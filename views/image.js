@@ -9,7 +9,7 @@ var config = {
 };
 
 var firebase = require('firebase');
-require('firebase/storage');
+var fs = require('firebase/storage');
 var app = firebase.initializeApp(config);
 
 var db = firebase.firestore();
