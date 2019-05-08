@@ -2,7 +2,7 @@ const express = require('express');
 var app = express();
 const hbs = require('hbs');
 const firebase = require('firebase');
-const admin = require("firebase-admin");
+//const admin = require("firebase-admin");
 const bodyParser = require('body-parser');
 const url = require('url');
 const fs = require('fs');
@@ -12,12 +12,12 @@ var app = express();
 
 
 
-app.use(session({ secret: 'krunal', resave: false, saveUninitialized: true }));
-app.use(expressValidator());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
+// app.use(session({ secret: 'krunal', resave: false, saveUninitialized: true }));
+// app.use(expressValidator());
+// app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({
+//     extended: true
+// }));
 
 var port = process.env.PORT || 8080;
 
@@ -102,19 +102,19 @@ app.get('*', (req, res) => {
 });
 
 
-const firebase=require('firebase');
-const a = require('firebase/storage');
-var config = {
-    apiKey: "AIzaSyD-JUCw1YT0kN7rFez1AZckOvLC3E5kcY0",
-    authDomain: "bhredz.firebaseapp.com",
-    databaseURL: "https://bhredz.firebaseio.com",
-    projectId: "bhredz",
-    storageBucket: "bhredz.appspot.com",
-    messagingSenderId: "37106834429"
-};
-firebase.initializeApp(config);
-var db = firebase.firestore();
-console.log(db);
+//const firebase=require('firebase');
+//const a = require('firebase/storage');
+  // var config = {
+  //     apiKey: "AIzaSyD-JUCw1YT0kN7rFez1AZckOvLC3E5kcY0",
+  //     authDomain: "bhredz.firebaseapp.com",
+  //     databaseURL: "https://bhredz.firebaseio.com",
+  //     projectId: "bhredz",
+  //     storageBucket: "bhredz.appspot.com",
+  //     messagingSenderId: "37106834429"
+  // };
+  // firebase.initializeApp(config);
+  // var db = firebase.firestore();
+  // console.log(db);
 
 
 function addData(name, price, condition, location, image)
@@ -240,4 +240,3 @@ app.post('/newUser', (request, response) => {
         });
     }
 });
-    
