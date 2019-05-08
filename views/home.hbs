@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="css/stylesheet.css">
 </head>
 <body>
-    {{>nav_bar}}
+    {{>navbar}}
 
     <img src="images/Logo.PNG" class="rounded mx-auto d-block" alt="logo">
 
@@ -20,7 +20,7 @@
             <p class="lead">
                 {{#if user}}
                 {{else}}
-                    <a href="AddItem.html">Log in to start shopping</a>
+                    <a href="/login">Log in to start shopping</a>
                 {{/if}}
             </p>
         </div>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <title>{{title}}</title>
+      {{>headinit}}
+
+  </head>
+  <body>
+    <script src="AddImage.js"></script>
+    {{>navbar}}
+    <br>
+    <h1 align="center">Add a product</h1>
+    <br>
+    <div class="container">
+
+    <form action="/firebase" method="post">
+        <div class="first">
+            <div class="form-row">
+                <div class="col">
+                    <label for="inputfirstname">Product Name</label>
+                    <input type="text" class="form-control" id="name" placeholder="Product Name" name="name">
+                </div>
+                <div class="col">
+                    <label for="inputfirstname">Seller Name</label>
+                    <input type="text" class="form-control" placeholder="Seller Name">
+                </div>
+            </div>
+        </div>
+
+        <div class="email">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="inputemail">Email</label>
+                    <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputAddress">Price</label>
+            <input type="text" class="form-control" id="price" placeholder="$" name="price">
+        </div>
+        <div class="form-group">
+            <label for="inputAddress2">Condition</label>
+            <input type="text" class="form-control" id="condition" placeholder="Good,Bad,Excellent" name="condition">
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="inputCity">City</label>
+                <input type="text" class="form-control" id="location" name="location">
+            </div>
+            <div class="form-group col-md-4">
+                <label for="inputState">Provnice</label>
+                <select id="inputState" class="form-control">
+                    <option selected>Choose...</option>
+                    <option>British Columbia</option>
+                    <option>Alberta</option>
+                </select>
+            </div>
+            <div class="form-group col-md-2">
+                <label for="inputZip">Postal Code</label>
+                <input type="text" class="form-control" id="inputZip">
+            </div>
+        </div>
+
+        <div class="form-row">
+        <label style="font-size: 18px">
+            Submit an image:
+            <input type="file" id="fileButton" name="something" onchange="imageUpload()">
+            <progress value="0" max="100" id="uploader">0%</progress>
+
+        </label>
+        </div>
+
+        <br>
+
+        <button type="submit" class="btn btn-primary">Post</button>
+    </form>
+    </div>
+
+    {{>footinit}}
+  </body>
+</html>

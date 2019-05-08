@@ -1,39 +1,32 @@
-body {
-    background-image: url("../images/backgound.jpg");
-    background-size: 1920px 1080px;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    height: 100%;
-    width: 100%;
+.footer {
+
+  background-color: #f0f0f0;
+  color: #707070;
+}
+#products
+{
+  margin-bottom: 200px;
+}
+form{
+  margin-bottom: 450px;
+}
+label
+{
+  margin: 1%;
+}
+.first{
+  margin-top:  30px;
 }
 
-.wrapper {
-    height: 100%;
+.email{
+  margin-top: 30px;
 }
 
-footer {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    text-align: center;
-    height: 25px;
-    background-color: white;
-    opacity: 0.5;
+#logo {
+  margin: -18px;
+}
+.card
+{
+  border: solid black 2px;
 }
 
-#sign_in {
-    width: 300px;
-    margin-top: 30px;
-    margin-left: 500px;
-    padding: 20px;
-    background-color: white;
-}
-
-#login {
-    width: 300px;
-    margin-top: 30px;
-    margin-left: 500px;
-    padding: 20px;
-    background-color: white;
-}

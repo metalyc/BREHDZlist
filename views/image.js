@@ -1,21 +1,41 @@
-// var config = {
-//     apiKey: "AIzaSyD-JUCw1YT0kN7rFez1AZckOvLC3E5kcY0",
-//     authDomain: "bhredz.firebaseapp.com",
-//     databaseURL: "https://bhredz.firebaseio.com",
-//     projectId: "bhredz",
-//     storageBucket: "bhredz.appspot.com",
-//     messagingSenderId: "37106834429"
-// };
-//
-// var firebase = require('firebase/app');
-// var fs = require('firebase/storage');
-// var app = firebase.initializeApp(config);
-//
-// var db = app.firestore();
+var config = {
+    apiKey: "AIzaSyD-JUCw1YT0kN7rFez1AZckOvLC3E5kcY0",
+    authDomain: "bhredz.firebaseapp.com",
+    databaseURL: "https://bhredz.firebaseio.com",
+    projectId: "bhredz",
+    storageBucket: "bhredz.appspot.com",
+    messagingSenderId: "37106834429"
+};
+
+const firebase = require('firebase'); require('firebase/storage'); require("firebase/firestore");
+var app = firebase.initializeApp(config);
+
+var db = firebase.firestore();
+
+
 
 function addData(name, price, condition, location, image)
 {
+    console.log('In new function'+name, price, condition, location, image);
+    //const firebase = require('firebase/app');
+    //require('firebase/firestore');
+    // require('firebase/auth');
+    //
+    // var config = {
+    //     apiKey: "AIzaSyD-JUCw1YT0kN7rFez1AZckOvLC3E5kcY0",
+    //     authDomain: "bhredz.firebaseapp.com",
+    //     databaseURL: "https://bhredz.firebaseio.com",
+    //     projectId: "bhredz",
+    //     storageBucket: "bhredz.appspot.com",
+    //     messagingSenderId: "37106834429"
+    // };
+    //
+    // firebase.initializeApp(config);
+    //
+    // var db = firebase.firestore();
 
+
+    //alert(name);
     var thename = name;
     var theprice = price;
     var thecondition = condition;
@@ -53,7 +73,6 @@ function addData(name, price, condition, location, image)
         });
     }
     getImageForPath('images/'+image);
-}
 
 
 
@@ -74,7 +93,7 @@ function addData(name, price, condition, location, image)
     //             console.error("Error adding document: ", error);
     //         });
 
-
+}
 
 
 
@@ -82,3 +101,4 @@ function addData(name, price, condition, location, image)
 module.exports = {
     addData
 };
+
