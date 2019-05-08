@@ -9,10 +9,21 @@ const fs = require('fs');
 const expressValidator = require('express-validator');
 //const cookieParser = require('cookie-parser');
 //var ObjectId = require('mongodb').ObjectID;
-const add = require('./views/image.js');
+//const add = require('./views/image.js');
 var app = express();
 
-
+const firebase=require('firebase');
+const a = require('firebase/storage');
+var config = {
+    apiKey: "AIzaSyD-JUCw1YT0kN7rFez1AZckOvLC3E5kcY0",
+    authDomain: "bhredz.firebaseapp.com",
+    databaseURL: "https://bhredz.firebaseio.com",
+    projectId: "bhredz",
+    storageBucket: "bhredz.appspot.com",
+    messagingSenderId: "37106834429"
+};
+firebase.initializeApp(config);
+var db = firebase.firestore;
 
 
 app.use(session({ secret: 'krunal', resave: false, saveUninitialized: true }));
@@ -396,7 +407,47 @@ app.post('/firebase', function(request, response) {
 
 });
 */
+function addData(name, price, condition, location, image)
+{
 
+    var thename = name;
+    var theprice = price;
+    var thecondition = condition;
+    var thelocation = location;
+    var theImg = image;
+
+
+    function getImageForPath(p){
+        global.XMLHttpRequest = require('xhr2');
+
+        console.log(firebase);
+        var storageRef = firebase.storage().ref();
+        var spaceRef = storageRef.child(p);
+
+        storageRef.child(p).getDownloadURL().then(function(url) {
+            var fullurl = url;
+            db.collection("Products").add({
+                    Price: price,
+                    Name: name,
+                    Location: location,
+                    Condition: condition,
+                    Img: fullurl
+                }
+            )
+                .then(function(docRef) {
+                    console.log("Document written with ID: ", docRef.id);
+//update the products view
+                    //getProducts();
+                })
+                .catch(function(error) {
+                    console.error("Error adding document: ", error);
+                });
+        }).catch(function(error) {
+            //catch error here
+        });
+    }
+    getImageForPath('images/'+image);
+}
 
 app.post('/firebase', function(request, response)
 {
@@ -409,7 +460,7 @@ app.post('/firebase', function(request, response)
     console.log('Image is: ', request.body);
 
 
-    add.addData(name, price, condition, location, img);
+    addData(name, price, condition, location, img);
     response.redirect('/');
 });
 
