@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>{{title}}</title>
+    {{>headinit}}
+  </head>
+  <body class="d-flex flex-column h-100">
+    {{>navbar}}
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+            <form action="" method="post">
+              <div class="form-group">
+                <label for="loginemail">Email</label>
+                <input type="email" id="loginemail" class="form-control" required>
+              </div>
+              <div class="form-group">
+                <label for="loginpass">Password</label>
+                <input type="password" id="loginpass" class="form-control" required>
+              </div>
+              <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+            </div>
+        </div>
+    </div>
+    {{>footinit}}
+  </body>
+</html>

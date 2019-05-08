@@ -1,12 +1,18 @@
 <!-- navbar -->
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-  <span class="navbar-brand">Home</span>
+  <span class="navbar-brand">{{siteName}}</span>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
     <div class="navbar-nav">
-      <div class="navbar-nav" id="login-logout"></div>
+      {{#if user}}
+        <a class="nav-item nav-link" href="#">{{username}}</a>
+        <a class="nav-item nav-link btn btn-danger">Logout</a>
+      {{else}}
+        <a class="nav-item nav-link" href="/login">Login</a>
+        <a class="nav-item nav-link btn btn-primary" href="/signup">Signup</a>
+      {{/if}}
       <a class="nav-item nav-link" href="/">Home</a>
       <a class="nav-item nav-link" href="/products">Products</a>
       <a class="nav-item nav-link" href="/add">Add</a>
@@ -53,7 +59,7 @@
       </div>
       <div class="modal-body">
         <div class="form-group">
-          <label for="loginemail">Email</label>
+          <label for="signupemail">Email</label>
           <input type="email" class="form-control" id="signupemail" onkeyup="checkpass(); return false" required>
         </div>
         <div class="form-group">
