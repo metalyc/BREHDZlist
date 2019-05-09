@@ -16,10 +16,13 @@
                 <input type="email" id="loginemail" class="form-control" required>
 
               <div class="form-group">
-                <label for="loginpass">Password</label>
-                <input type="password" id="loginpass" class="form-control" required>
+                <label for="pass">Password</label>
+                <input type="password" id="pass" name="pass" class="form-control" required>
               </div>
               <button type="submit" class="btn btn-primary">Login</button>
+                <div style="color: red">
+                    {{message}}
+                </div>
             </form>
         
         </div>
