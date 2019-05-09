@@ -92,11 +92,8 @@ app.get('/signup', (req, res) => {
     });
 });
 
-//
-app.get('/urlproducts', (req, res) => {
-    res.render('productspageContinued.hbs', {
-        title: 'Signup'
-    });
+app.get('/product/*', (req, res) => {
+  res.render('productspageContinued.hbs');
 });
 
 //404 page
@@ -121,7 +118,7 @@ const a = require('firebase/storage');
   };
   firebase.initializeApp(config);
   var db = firebase.firestore();
-  console.log(db);
+//  console.log(db);
 
 
 function addData(name, price, condition, location, image)
@@ -138,7 +135,7 @@ function addData(name, price, condition, location, image)
 
 
     function getImageForPath(p){
-      console.log(p);
+//      console.log(p);
         global.XMLHttpRequest = require('xhr2');
 
 
@@ -190,7 +187,7 @@ app.listen(port, () => {
     console.log(`Server is up on port ${port}`);
 //    utils.init();
 });
-
+/* what even are these?
 app.get('/login', (req, res) => {
     res.render('login.hbs', {
         title: 'Login',
@@ -204,7 +201,7 @@ app.get('/signup', (req, res) => {
     res.render('signup.hbs', {
         title: 'Signup'
     });
-
+*/
 //start server
     app.use(express.static(__dirname));
     var server = app.listen(process.env.PORT || 8080, () => {
@@ -230,20 +227,17 @@ app.post('/newUser', (request, response) => {
     }
 });
 
-// POST for user signup
+// post for login
+app.post('/actionlogin', (req, res) => {
+  var email = req.body.email;
+  var pass = req.body.pass;
+  firebase.auth().signInWithEmailAndPassword(email, pass)
+  .then( => {
+    console.log("logged in with", email);
 
-app.post('/newUser', (request, response) => {
-    var email = request.body.email;
-    var pwd1 = request.body.password1;
-    var pwd2 = request.body.password2;
-
-    if (pwd1 === pwd2) {
-        firebase.auth().createUserWithEmailAndPassword(email, pwd1).catch(function (error) {
-            var errorCode = error.code;
-            var errorMessage = error.message;
-        });
-        response.render('signup.hbs', {
-            message: `Created account for ${email}`
-        });
-    }
+  })
+  .catch(function(error){
+    console.log("Error with code:", error.code, "\nWith message:", error.message);
+  });
+  res.redirect('/');
 });
