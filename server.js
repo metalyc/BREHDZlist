@@ -183,10 +183,6 @@ app.post('/firebase', function(request, response)
     response.redirect('/');
 });
 
-app.listen(port, () => {
-    console.log(`Server is up on port ${port}`);
-//    utils.init();
-});
 /* what even are these?
 app.get('/login', (req, res) => {
     res.render('login.hbs', {
@@ -203,10 +199,9 @@ app.get('/signup', (req, res) => {
     });
 */
 //start server
-    app.use(express.static(__dirname));
-    var server = app.listen(process.env.PORT || 8080, () => {
-        console.log('server is listening on port', server.address().port);
-    });
+app.use(express.static(__dirname));
+var server = app.listen(process.env.PORT || 8080, () => {
+    console.log('server is listening on port', server.address().port);
 });
 
 // POST for user signup
@@ -232,9 +227,8 @@ app.post('/actionlogin', (req, res) => {
   var email = req.body.email;
   var pass = req.body.pass;
   firebase.auth().signInWithEmailAndPassword(email, pass)
-  .then( => {
+  .then(function() {
     console.log("logged in with", email);
-
   })
   .catch(function(error){
     console.log("Error with code:", error.code, "\nWith message:", error.message);
