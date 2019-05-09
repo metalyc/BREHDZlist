@@ -185,7 +185,7 @@ app.post('/newUser', (request, response) => {
     }
 });
 
-//post for login
+//post for login and helper for username
 app.post('/actionlogin', (req, res) => {
   var email = req.body.email;
   var pass = req.body.pass;
@@ -193,6 +193,9 @@ app.post('/actionlogin', (req, res) => {
   .then(function() {
     console.log("logged in with", email);
     app.locals.user = true;
+    hbs.registerHelper('username', () => {
+      return email;
+    });
     res.redirect('/');
   })
   .catch(function(error){
@@ -212,6 +215,7 @@ app.get('/logout', (req, res) => {
     console.log("Error with code:", error.code, "\nWith message:", error.message);
   });
 });
+
 
 
 /////////////////////////////
