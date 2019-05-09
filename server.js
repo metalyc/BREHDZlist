@@ -8,6 +8,13 @@ const bodyParser = require('body-parser');
 //const fs = require('fs');
 const expressValidator = require('express-validator');
 var app = express();
+
+//Encryption Stuff
+const crypto = require('crypto');
+const algorithm = 'aes-256-cbc';
+const key = crypto.randomBytes(32);
+const iv = crypto.randomBytes(16);
+
 /*
 app.use(session({ secret: 'krunal', resave: false, saveUninitialized: true }));
 app.use(expressValidator());
@@ -93,6 +100,25 @@ app.get('/product/*', (req, res) => {
   res.render('productspageContinued.hbs');
 });
 
+function encrypt(phone) {
+    let cipher = crypto.createCipheriv('aes-256-cbc', Buffer.from(key), iv);
+    let encrypted = cipher.update(phone);
+    encrypted = Buffer.concat([encrypted, cipher.final()]);
+    return {
+        iv: iv.toString('hex'),
+        encryptedData: encrypted.toString('hex')
+    };
+}
+
+function decrypt(phone) {
+    let iv = Buffer.from(phone.iv, 'hex');
+    let encryptedText = Buffer.from(phone.encryptedData, 'hex');
+    let decipher = crypto.createDecipheriv('aes-256-cbc', Buffer.from(key), iv);
+    let decrypted = decipher.update(encryptedText);
+    decrypted = Buffer.concat([decrypted, decipher.final()]);
+    return decrypted.toString();
+}
+
 //const firebase=require('firebase');
 const a = require('firebase/storage');
 var config = {
@@ -118,6 +144,8 @@ function addData(name, price, condition, location, image, phone)
     var thelocation = location;
     var theImg = image;
     var theNumber = phone;
+    var encryptedphone = encrypt(phone);
+    var decryptedphone = decrypt(encryptedphone);
 
     function getImageForPath(p){
 //      console.log(p);
@@ -136,10 +164,12 @@ function addData(name, price, condition, location, image, phone)
                     Name: name,
                     Location: location,
                     Condition: condition,
-                    Phone: phone,
+                    Phone: encryptedphone,
                     Img: url
                   }).then(function(docRef) {
                     console.log("Document written with ID: ", docRef.id);
+                    console.log(encryptedphone);
+                    console.log(decryptedphone);
 //update the products view
                     //getProducts();
                 }).catch(function(error) {
