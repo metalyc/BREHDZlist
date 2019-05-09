@@ -133,7 +133,7 @@ firebase.initializeApp(config);
 var db = firebase.firestore();
 //  console.log(db);
 
-
+const request = require('request');
 function addData(name, price, condition, location, image, phone)
 {
   console.log(image);
@@ -183,21 +183,40 @@ function addData(name, price, condition, location, image, phone)
     getImageForPath('images/'+image);
 }
 
-app.post('/firebase', function(request, response)
+app.post('/firebase', function(req, res)
 {
-    var name=request.body.name;
-    var price=request.body.price;
-    var condition=request.body.condition;
-    var location=request.body.location;
-    var img = request.body.something;
-    var phone = request.body.phone_number;
+    var name=req.body.name;
+    var price=req.body.price;
+    var condition=req.body.condition;
+    var location=req.body.location;
+    var img = req.body.something;
+    var phone = req.body.phone_number;
     console.log(img);
 
-    //console.log('Image is: ', request.body);
+    if(req.body['g-recaptcha-response'] === undefined || req.body['g-recaptcha-response'] === '' || req.body['g-recaptcha-response'] === null)
+ {
+   //return res.json({"responseError" : "Please select captcha first"});
+ }
+ const secretKey = "6Lcdi6IUAAAAAL-HspS-Y9UmWuoE0ToxT8BSXjnc";
 
+ const verificationURL = "https://www.google.com/recaptcha/api/siteverify?secret=" + secretKey + "&response=" + req.body['g-recaptcha-response'] + "&remoteip=" + req.connection.remoteAddress;
 
-    addData(name, price, condition, location, img, phone);
-    response.redirect('/');
+ request(verificationURL,function(error,response,body) {
+   body = JSON.parse(body);
+
+   if(body.success !== undefined && !body.success) {
+     res.render('add.hbs', {
+       error:"Please complete the reCAPTCHA"
+     });     //return res.json({"responseError" : "Failed captcha verification"});
+   }
+   //res.json({"responseSuccess" : "Sucess"});
+   else
+     {
+       addData(name, price, condition, location, img, phone);
+       res.redirect('/');
+     }
+
+ });
 });
 
 // POST for user signup
