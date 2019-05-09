@@ -92,6 +92,13 @@ app.get('/signup', (req, res) => {
     });
 });
 
+//
+app.get('/urlproducts', (req, res) => {
+    res.render('productspageContinued.hbs', {
+        title: 'Signup'
+    });
+});
+
 //404 page
 app.get('*', (req, res) => {
     res.status(404);
