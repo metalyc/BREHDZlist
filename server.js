@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 //const url = require('url');
 //const fs = require('fs');
 const expressValidator = require('express-validator');
+var app = express();
 
 //Encryption Stuff
 const crypto = require('crypto');
@@ -205,32 +206,13 @@ app.post('/newUser', (request, response) => {
     var pwd1 = request.body.password1;
     var pwd2 = request.body.password2;
 
-    if (pwd1 === pwd2 && pwd1.length >= 6) {
-        console.log("creating account");
-        firebase.auth().createUserWithEmailAndPassword(email, pwd1)
-            .then(function () {
-                response.render('signup.hbs', {
-                    message: `Created account for ${email}`
-                })
-            })
-            .catch(function (error) {
-                var errorCode = error.code;
-                var errorMessage = error.message;
-                console.log(errorMessage);
-                response.render('signup.hbs', {
-                    error: errorMessage
-                })
-            });
-    } else if (!pwd1 === pwd2){
+    if (pwd1 === pwd2) {
+        firebase.auth().createUserWithEmailAndPassword(email, pwd1).catch(function (error) {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+        });
         response.render('signup.hbs', {
-            error: 'Passwords do not match'
-    })} else if (pwd1.length <= 5) {
-        response.render('signup.hbs', {
-            error: "Password must be 6 or more characters"
-        })
-    } else {
-        response.render('signup.hbs', {
-            error: "Invalid Password"
+            message: `Created account for ${email}`
         })
     }
 });
@@ -250,9 +232,6 @@ app.post('/actionlogin', (req, res) => {
   })
   .catch(function(error){
     console.log("Error with code:", error.code, "\nWith message:", error.message);
-    res.render('login.hbs', {
-        message: error.message
-    })
   });
 });
 
