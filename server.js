@@ -7,8 +7,12 @@ const bodyParser = require('body-parser');
 //const url = require('url');
 //const fs = require('fs');
 const expressValidator = require('express-validator');
-const Swal2 = require('sweetalert2');
-const Swal = require('sweetalert');
+
+//Encryption Stuff
+const crypto = require('crypto');
+const algorithm = 'aes-256-cbc';
+const key = crypto.randomBytes(32);
+const iv = crypto.randomBytes(16);
 
 /*
 app.use(session({ secret: 'krunal', resave: false, saveUninitialized: true }));
@@ -95,6 +99,25 @@ app.get('/product/*', (req, res) => {
   res.render('productspageContinued.hbs');
 });
 
+function encrypt(phone) {
+    let cipher = crypto.createCipheriv('aes-256-cbc', Buffer.from(key), iv);
+    let encrypted = cipher.update(phone);
+    encrypted = Buffer.concat([encrypted, cipher.final()]);
+    return {
+        iv: iv.toString('hex'),
+        encryptedData: encrypted.toString('hex')
+    };
+}
+
+function decrypt(phone) {
+    let iv = Buffer.from(phone.iv, 'hex');
+    let encryptedText = Buffer.from(phone.encryptedData, 'hex');
+    let decipher = crypto.createDecipheriv('aes-256-cbc', Buffer.from(key), iv);
+    let decrypted = decipher.update(encryptedText);
+    decrypted = Buffer.concat([decrypted, decipher.final()]);
+    return decrypted.toString();
+}
+
 //const firebase=require('firebase');
 const a = require('firebase/storage');
 var config = {
@@ -110,7 +133,7 @@ var db = firebase.firestore();
 //  console.log(db);
 
 
-function addData(name, price, condition, location, image)
+function addData(name, price, condition, location, image, phone)
 {
   console.log(image);
 
@@ -119,6 +142,9 @@ function addData(name, price, condition, location, image)
     var thecondition = condition;
     var thelocation = location;
     var theImg = image;
+    var theNumber = phone;
+    var encryptedphone = encrypt(phone);
+    var decryptedphone = decrypt(encryptedphone);
 
     function getImageForPath(p){
 //      console.log(p);
@@ -137,9 +163,12 @@ function addData(name, price, condition, location, image)
                     Name: name,
                     Location: location,
                     Condition: condition,
+                    Phone: encryptedphone,
                     Img: url
                   }).then(function(docRef) {
                     console.log("Document written with ID: ", docRef.id);
+                    console.log(encryptedphone);
+                    console.log(decryptedphone);
 //update the products view
                     //getProducts();
                 }).catch(function(error) {
@@ -160,12 +189,13 @@ app.post('/firebase', function(request, response)
     var condition=request.body.condition;
     var location=request.body.location;
     var img = request.body.something;
+    var phone = request.body.phone_number;
     console.log(img);
 
     //console.log('Image is: ', request.body);
 
 
-    addData(name, price, condition, location, img);
+    addData(name, price, condition, location, img, phone);
     response.redirect('/');
 });
 

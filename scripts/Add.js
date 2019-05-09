@@ -46,6 +46,7 @@ function addData(){
   var price = document.getElementById("price").value;
   var location = document.getElementById("location").value;
   var condition = document.getElementById("condition").value;
+  var phone = document.getElementById("phone_number").value;
 //  var fullurl = getImageForPath('images/' + file.name);
   console.log(file.name, fullurl);
   firebase.firestore().collection("Products").add({
@@ -53,6 +54,7 @@ function addData(){
     Name: name,
     Location: location,
     Condition: condition,
+    Phone: phone,
     Img: fullurl
   })
   .then(function(docRef) {
