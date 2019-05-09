@@ -8,23 +8,6 @@ const bodyParser = require('body-parser');
 //const fs = require('fs');
 const expressValidator = require('express-validator');
 
-var app = express();
-
-app.set('view engine', 'ejs');
-app.use(express.static('public'));
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(bodyParser.json());
-
-const request = require('request');
-
-
-
-// app.use(session({ secret: 'krunal', resave: false, saveUninitialized: true }));
-// app.use(expressValidator());
-// app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({
-//     extended: true
-// }));
 //Encryption Stuff
 const crypto = require('crypto');
 const algorithm = 'aes-256-cbc';
@@ -199,7 +182,7 @@ function addData(name, price, condition, location, image, phone)
     getImageForPath('images/'+image);
 }
 
-app.post('/firebase', function(req, res)
+app.post('/firebase', function(request, response)
 {
     var name=request.body.name;
     var price=request.body.price;
@@ -208,49 +191,6 @@ app.post('/firebase', function(req, res)
     var img = request.body.something;
     var phone = request.body.phone_number;
     console.log(img);
-
-    if(req.body['g-recaptcha-response'] === undefined || req.body['g-recaptcha-response'] === '' || req.body['g-recaptcha-response'] === null)
- {
-   //return res.json({"responseError" : "Please select captcha first"});
- }
- const secretKey = "6Lcdi6IUAAAAAL-HspS-Y9UmWuoE0ToxT8BSXjnc";
-
- const verificationURL = "https://www.google.com/recaptcha/api/siteverify?secret=" + secretKey + "&response=" + req.body['g-recaptcha-response'] + "&remoteip=" + req.connection.remoteAddress;
-
- request(verificationURL,function(error,response,body) {
-   body = JSON.parse(body);
-
-   if(body.success !== undefined && !body.success) {
-     res.render('add.hbs', {
-       error:"Please complete the reCAPTCHA"
-     });     //return res.json({"responseError" : "Failed captcha verification"});
-   }
-   //res.json({"responseSuccess" : "Sucess"});
-   else
-     {
-       addData(name, price, condition, location, img);
-       res.redirect('/');
-     }
-
- });
-
-//     if(req.body['g-recaptcha-response'] === undefined || req.body['g-recaptcha-response'] === '' || req.body['g-recaptcha-response'] === null) {
-//       return res.json({"responseCode" : 1,"responseDesc" : "Please select captcha"});
-//     }
-//   // Put your secret key here.
-//     var secretKey = "6Lcdi6IUAAAAAL-HspS-Y9UmWuoE0ToxT8BSXjnc";
-//   // req.connection.remoteAddress will provide IP address of connected user.
-//     var verificationUrl = "https://www.google.com/recaptcha/api/siteverify?secret=" + secretKey + "&response=" + req.body['g-recaptcha-response'] + "&remoteip=" + req.connection.remoteAddress;
-//   // Hitting GET request to the URL, Google will respond with success or error scenario.
-//     request(verificationUrl,function(error,response,body) {
-//       body = JSON.parse(body);
-//     // Success will be true or false depending upon captcha validation.
-//     if(body.success !== undefined && !body.success) {
-//       return res.json({"responseCode" : 1,"responseDesc" : "Failed captcha verification"});
-//     }
-//     res.json({"responseCode" : 0,"responseDesc" : "Sucess"});
-//   });
-// });
 
     //console.log('Image is: ', request.body);
 
@@ -296,7 +236,7 @@ app.post('/newUser', (request, response) => {
 });
 
 //post for login and helper for username
-app.post('/login', (req, res) => {
+app.post('/actionlogin', (req, res) => {
   var email = req.body.email;
   var pass = req.body.pass;
   firebase.auth().signInWithEmailAndPassword(email, pass)
