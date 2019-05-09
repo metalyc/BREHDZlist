@@ -296,7 +296,7 @@ app.post('/newUser', (request, response) => {
 });
 
 //post for login and helper for username
-app.post('/actionlogin', (req, res) => {
+app.post('/login', (req, res) => {
   var email = req.body.email;
   var pass = req.body.pass;
   firebase.auth().signInWithEmailAndPassword(email, pass)

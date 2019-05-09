@@ -53,5 +53,6 @@
   },
   "directories": {
     "test": "test"
-  }
+  },
+  "description": "Online Shoe Store"
 }
