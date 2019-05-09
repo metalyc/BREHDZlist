@@ -23,11 +23,13 @@
     "firebase": "^6.0.0",
     "fs": "0.0.1-security",
     "hbs": "^4.0.4",
-    "iron": "^5.0.6",
+    "i-am-not-a-robot": "^0.7.1",
+    "jade": "^1.11.0",
     "mongodb": "^3.2.3",
     "mongoose": "^5.4.22",
-    "sweetalert": "^2.1.2",
-    "sweetalert2": "^8.10.4",
+    "recaptcha": "^1.2.1",
+    "request": "^2.88.0",
+    "svg-captcha": "^1.4.0",
     "url": "^0.11.0",
     "utils": "^0.3.1",
     "xhr2": "*",
@@ -51,5 +53,6 @@
   },
   "directories": {
     "test": "test"
-  }
+  },
+  "description": "Online Shoe Store"
 }

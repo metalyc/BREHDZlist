@@ -30,12 +30,3 @@ label
 {
   border: solid black 2px;
 }
-
-
-body{
-  background-image: url("/images/blue.png");
-  height: 100%;
-  width: 100%;
-  background-repeat: no-repeat;
-  background-size: 1920px 1080px;
-}
