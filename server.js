@@ -10,6 +10,13 @@ const expressValidator = require('express-validator');
 
 var app = express();
 
+app.set('view engine', 'ejs');
+app.use(express.static('public'));
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
+
+const request = require('request');
+
 
 
 // app.use(session({ secret: 'krunal', resave: false, saveUninitialized: true }));
@@ -92,29 +99,26 @@ app.get('/signup', (req, res) => {
     });
 });
 
+
+
+
+
 //404 page
-app.get('*', (req, res) => {
-    res.status(404);
-    res.render('404.hbs', {
-        title: '404',
-        error: 'Page does not exist.'
-    });
-});
 
 
 //const firebase=require('firebase');
-//const a = require('firebase/storage');
-  // var config = {
-  //     apiKey: "AIzaSyD-JUCw1YT0kN7rFez1AZckOvLC3E5kcY0",
-  //     authDomain: "bhredz.firebaseapp.com",
-  //     databaseURL: "https://bhredz.firebaseio.com",
-  //     projectId: "bhredz",
-  //     storageBucket: "bhredz.appspot.com",
-  //     messagingSenderId: "37106834429"
-  // };
-  // firebase.initializeApp(config);
-  // var db = firebase.firestore();
-  // console.log(db);
+const a = require('firebase/storage');
+  var config = {
+      apiKey: "AIzaSyD-JUCw1YT0kN7rFez1AZckOvLC3E5kcY0",
+      authDomain: "bhredz.firebaseapp.com",
+      databaseURL: "https://bhredz.firebaseio.com",
+      projectId: "bhredz",
+      storageBucket: "bhredz.appspot.com",
+      messagingSenderId: "37106834429"
+  };
+  firebase.initializeApp(config);
+  var db = firebase.firestore();
+  console.log(db);
 
 
 function addData(name, price, condition, location, image)
@@ -163,80 +167,129 @@ function addData(name, price, condition, location, image)
     getImageForPath('images/'+image);
 }
 
-app.post('/firebase', function(request, response)
+app.post('/firebase', function(req, res)
 {
-    var name=request.body.name;
-    var price=request.body.price;
-    var condition=request.body.condition;
-    var location=request.body.location;
-    var img = request.body.something;
+    var name=req.body.name;
+    var price=req.body.price;
+    var condition=req.body.condition;
+    var location=req.body.location;
+    var img = req.body.something;
     console.log(img);
+
+    if(req.body['g-recaptcha-response'] === undefined || req.body['g-recaptcha-response'] === '' || req.body['g-recaptcha-response'] === null)
+ {
+   //return res.json({"responseError" : "Please select captcha first"});
+ }
+ const secretKey = "6Lcdi6IUAAAAAL-HspS-Y9UmWuoE0ToxT8BSXjnc";
+
+ const verificationURL = "https://www.google.com/recaptcha/api/siteverify?secret=" + secretKey + "&response=" + req.body['g-recaptcha-response'] + "&remoteip=" + req.connection.remoteAddress;
+
+ request(verificationURL,function(error,response,body) {
+   body = JSON.parse(body);
+
+   if(body.success !== undefined && !body.success) {
+     res.render('add.hbs', {
+       error:"Please complete the reCAPTCHA"
+     });     //return res.json({"responseError" : "Failed captcha verification"});
+   }
+   //res.json({"responseSuccess" : "Sucess"});
+   else
+     {
+       addData(name, price, condition, location, img);
+       res.redirect('/');
+     }
+
+ });
+
+//     if(req.body['g-recaptcha-response'] === undefined || req.body['g-recaptcha-response'] === '' || req.body['g-recaptcha-response'] === null) {
+//       return res.json({"responseCode" : 1,"responseDesc" : "Please select captcha"});
+//     }
+//   // Put your secret key here.
+//     var secretKey = "6Lcdi6IUAAAAAL-HspS-Y9UmWuoE0ToxT8BSXjnc";
+//   // req.connection.remoteAddress will provide IP address of connected user.
+//     var verificationUrl = "https://www.google.com/recaptcha/api/siteverify?secret=" + secretKey + "&response=" + req.body['g-recaptcha-response'] + "&remoteip=" + req.connection.remoteAddress;
+//   // Hitting GET request to the URL, Google will respond with success or error scenario.
+//     request(verificationUrl,function(error,response,body) {
+//       body = JSON.parse(body);
+//     // Success will be true or false depending upon captcha validation.
+//     if(body.success !== undefined && !body.success) {
+//       return res.json({"responseCode" : 1,"responseDesc" : "Failed captcha verification"});
+//     }
+//     res.json({"responseCode" : 0,"responseDesc" : "Sucess"});
+//   });
+// });
 
     //console.log('Image is: ', request.body);
 
 
-    addData(name, price, condition, location, img);
-    response.redirect('/');
+
 });
 
 app.listen(port, () => {
     console.log(`Server is up on port ${port}`);
 //    utils.init();
 });
-
-app.get('/login', (req, res) => {
-    res.render('login.hbs', {
-        title: 'Login',
-        email: 'Email',
-        pass: 'Password'
+//
+// app.get('/login', (req, res) => {
+//     res.render('login.hbs', {
+//         title: 'Login',
+//         email: 'Email',
+//         pass: 'Password'
+//     });
+// });
+//
+// // Signup page
+// app.get('/signup', (req, res) => {
+//     res.render('signup.hbs', {
+//         title: 'Signup'
+//     });
+//
+// //start server
+//     app.use(express.static(__dirname));
+//     var server = app.listen(process.env.PORT || 8080, () => {
+//         console.log('server is listening on port', server.address().port);
+//     });
+// });
+//
+// // POST for user signup
+//
+// app.post('/newUser', (request, response) => {
+//     var email = request.body.email;
+//     var pwd1 = request.body.password1;
+//     var pwd2 = request.body.password2;
+//
+//     if (pwd1 === pwd2) {
+//         firebase.auth().createUserWithEmailAndPassword(email, pwd1).catch(function (error) {
+//             var errorCode = error.code;
+//             var errorMessage = error.message;
+//         });
+//         response.render('signup.hbs', {
+//             message: `Created account for ${email}`
+//         })
+//     }
+// });
+//
+// // POST for user signup
+//
+// app.post('/newUser', (request, response) => {
+//     var email = request.body.email;
+//     var pwd1 = request.body.password1;
+//     var pwd2 = request.body.password2;
+//
+//     if (pwd1 === pwd2) {
+//         firebase.auth().createUserWithEmailAndPassword(email, pwd1).catch(function (error) {
+//             var errorCode = error.code;
+//             var errorMessage = error.message;
+//         });
+//         response.render('signup.hbs', {
+//             message: `Created account for ${email}`
+//         });
+//     }
+// });
+app.get('*', (req, res) => {
+    res.status(404);
+    res.render('404.hbs', {
+        title: '404',
+        error: 'Page does not exist.'
     });
-});
-
-// Signup page
-app.get('/signup', (req, res) => {
-    res.render('signup.hbs', {
-        title: 'Signup'
-    });
-
-//start server
-    app.use(express.static(__dirname));
-    var server = app.listen(process.env.PORT || 8080, () => {
-        console.log('server is listening on port', server.address().port);
-    });
-});
-
-// POST for user signup
-
-app.post('/newUser', (request, response) => {
-    var email = request.body.email;
-    var pwd1 = request.body.password1;
-    var pwd2 = request.body.password2;
-
-    if (pwd1 === pwd2) {
-        firebase.auth().createUserWithEmailAndPassword(email, pwd1).catch(function (error) {
-            var errorCode = error.code;
-            var errorMessage = error.message;
-        });
-        response.render('signup.hbs', {
-            message: `Created account for ${email}`
-        })
-    }
-});
-
-// POST for user signup
-
-app.post('/newUser', (request, response) => {
-    var email = request.body.email;
-    var pwd1 = request.body.password1;
-    var pwd2 = request.body.password2;
-
-    if (pwd1 === pwd2) {
-        firebase.auth().createUserWithEmailAndPassword(email, pwd1).catch(function (error) {
-            var errorCode = error.code;
-            var errorMessage = error.message;
-        });
-        response.render('signup.hbs', {
-            message: `Created account for ${email}`
-        });
-    }
 });

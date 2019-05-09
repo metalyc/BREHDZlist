@@ -29,4 +29,7 @@ label
 {
   border: solid black 2px;
 }
-
+.container
+{
+  border: 0px;
+}
