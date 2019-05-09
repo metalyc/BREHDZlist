@@ -103,18 +103,18 @@ app.get('*', (req, res) => {
 
 
 //const firebase=require('firebase');
-//const a = require('firebase/storage');
-  // var config = {
-  //     apiKey: "AIzaSyD-JUCw1YT0kN7rFez1AZckOvLC3E5kcY0",
-  //     authDomain: "bhredz.firebaseapp.com",
-  //     databaseURL: "https://bhredz.firebaseio.com",
-  //     projectId: "bhredz",
-  //     storageBucket: "bhredz.appspot.com",
-  //     messagingSenderId: "37106834429"
-  // };
-  // firebase.initializeApp(config);
-  // var db = firebase.firestore();
-  // console.log(db);
+const a = require('firebase/storage');
+  var config = {
+      apiKey: "AIzaSyD-JUCw1YT0kN7rFez1AZckOvLC3E5kcY0",
+      authDomain: "bhredz.firebaseapp.com",
+      databaseURL: "https://bhredz.firebaseio.com",
+      projectId: "bhredz",
+      storageBucket: "bhredz.appspot.com",
+      messagingSenderId: "37106834429"
+  };
+  firebase.initializeApp(config);
+  var db = firebase.firestore();
+  console.log(db);
 
 
 function addData(name, price, condition, location, image)
