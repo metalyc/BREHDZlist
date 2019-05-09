@@ -8,13 +8,15 @@
       {{#if user}}
         <a class="nav-item nav-link" href="#">{{username}}</a>
         <a class="nav-item nav-link btn btn-danger" href="/logout">Logout</a>
+        <a class="nav-item nav-link" href="/add">Add</a>
+        <a class="nav-item nav-link" href="/">Home</a>
+        <a class="nav-item nav-link" href="/products">Products</a>
       {{else}}
         <a class="nav-item nav-link" href="/login">Login</a>
         <a class="nav-item nav-link btn btn-primary" href="/signup">Signup</a>
+        <a class="nav-item nav-link" href="/">Home</a>
+        <a class="nav-item nav-link" href="/products">Products</a>
       {{/if}}
-      <a class="nav-item nav-link" href="/">Home</a>
-      <a class="nav-item nav-link" href="/products">Products</a>
-      <a class="nav-item nav-link" href="/add">Add</a>
     </div>
   </div>
 </nav>
