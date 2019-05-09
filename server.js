@@ -7,7 +7,6 @@ const bodyParser = require('body-parser');
 //const url = require('url');
 //const fs = require('fs');
 const expressValidator = require('express-validator');
-
 var app = express();
 /*
 app.use(session({ secret: 'krunal', resave: false, saveUninitialized: true }));
@@ -109,7 +108,7 @@ var db = firebase.firestore();
 //  console.log(db);
 
 
-function addData(name, price, condition, location, image)
+function addData(name, price, condition, location, image, phone)
 {
   console.log(image);
 
@@ -118,6 +117,7 @@ function addData(name, price, condition, location, image)
     var thecondition = condition;
     var thelocation = location;
     var theImg = image;
+    var theNumber = phone;
 
     function getImageForPath(p){
 //      console.log(p);
@@ -136,6 +136,7 @@ function addData(name, price, condition, location, image)
                     Name: name,
                     Location: location,
                     Condition: condition,
+                    Phone: phone,
                     Img: url
                   }).then(function(docRef) {
                     console.log("Document written with ID: ", docRef.id);
@@ -159,12 +160,13 @@ app.post('/firebase', function(request, response)
     var condition=request.body.condition;
     var location=request.body.location;
     var img = request.body.something;
+    var phone = request.body.phone_number;
     console.log(img);
 
     //console.log('Image is: ', request.body);
 
 
-    addData(name, price, condition, location, img);
+    addData(name, price, condition, location, img, phone);
     response.redirect('/');
 });
 
