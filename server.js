@@ -250,6 +250,9 @@ app.post('/actionlogin', (req, res) => {
   })
   .catch(function(error){
     console.log("Error with code:", error.code, "\nWith message:", error.message);
+    res.render('login.hbs', {
+        message: error.message
+    })
   });
 });
 
