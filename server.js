@@ -253,6 +253,9 @@ app.post('/actionlogin', (req, res) => {
     res.redirect('/');
   })
   .catch(function(error){
+      res.render('login.hbs', {
+          message: error.message
+      });
     console.log("Error with code:", error.code, "\nWith message:", error.message);
   });
 });

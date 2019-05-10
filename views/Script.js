@@ -9,7 +9,7 @@ function getProducts(){
                       <p class="card-text">` + 'Condition: <strong>' + doc.data().Condition + '</strong>' + `</p>
 
                     </div>
-                      <a class="btn btn-primary" href="` + doc.data().Name + `">Go to page</a>
+                      
                       <div class="card-footer text-muted text-center">
                       <p class="card-text"> $` + doc.data().Price + `</p>
                       </div>
