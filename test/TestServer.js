@@ -11,9 +11,9 @@ const test = require('firebase-functions-test')({
     projectId: "bhredz",
     storageBucket: "bhredz.appspot.com"
 }, '../bhredz-9315a3dadb11.json');
+const admin = require("firebase-admin")
 
-
-describe('Check Page Avaliablity', function () {
+describe('Check Page Avaliablity Tests', function () {
   it("404", function (done) {
     chai.request('http://localhost:8080')
       .get('/apple')
@@ -74,17 +74,56 @@ describe('Check Page Avaliablity', function () {
   });
 });
 
-describe('Check if Firebase functions', function () {
-  it('Log in', function (done) {
+describe('Firebase Authentication tests', function () {
+  it('Sign up', function (done) {
+    chai.request('http://localhost:8080')
+      .post('/newUser')
+      .send({
+        email: "foo@bar.com",
+        password1: "asdfgh",
+        password2: "asdfgh"
+      })
+      .end(function(err, res) {
+        expect(res).to.have.status(200);
+        done();
+      });
+  });
+  it('Log in (with created account)', function (done) {
     chai.request('http://localhost:8080')
       .post('/actionlogin')
       .send({
-        email: "test@mail.com",
+        email: "foo@bar.com",
         pass: "asdfgh"
       })
       .end(function(err, res) {
         expect(res).to.have.status(200);
-        assert.equal(message, "test@mail.com");
+        done();
+      });
+  });
+  it('Log out', function (done) {
+    chai.request('http://localhost:8080')
+      .get('/logout')
+      .end(function(err, res) {
+        expect(res).to.have.status(200);
+        done();
+      });
+  });
+});
+
+describe('Firebase Database Tests', function () {
+  it('Add data to products', function (done) {
+    chai.request('http://localhost:8080')
+      .post('/firebase')
+      .send({
+        name: "test",
+        price: "1",
+        condition: "test",
+        location: "test",
+        phone: "555-555-5555",
+        img: "test.png"
+      })
+      .end(function(err, res) {
+        expect(res).to.have.status(200);
         done();
       });
   });
