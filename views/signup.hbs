@@ -5,6 +5,8 @@
     <title>{{title}}</title>
     {{>headinit}}
   </head>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.2.0/zxcvbn.js"></script>
+
   <body class="d-flex flex-column h-100">
     {{>navbar}}
     <div class="container">
@@ -17,6 +19,7 @@
             <label for="signuppass1">Password</label>
             <input type="password" id="signuppass1" name="password1" class="form-control" value="" placeholder="Must be more than 6 characters" required>
           </div>
+          <img src="" alt="" id="password-strength-meter"></img>
           <div class="form-group">
             <label for="signuppass2">Re-enter Password</label>
             <input type="password" id="signuppass2" name="password2" class="form-control" value="" required>
@@ -29,6 +32,52 @@
                 {{message}}
             </div>
          </form>
+
+         <script>
+               var strength = {
+                   0: "Too guessable: risky password. (guesses < 10^3)",
+                   1: "Very guessable: protection from throttled online attacks. (guesses < 10^6)",
+                   2: "Somewhat guessable: protection from unthrottled online attacks. (guesses < 10^8)",
+                   3: "Safely unguessable: moderate protection from offline slow-hash scenario. (guesses < 10^10)",
+                   4: "Very unguessable: strong protection from offline slow-hash scenario. (guesses >= 10^10)"
+               }
+               var password = document.getElementById('signuppass1');
+               var meter = document.getElementById('password-strength-meter');
+               var pwstr = document.getElementById('password-strength');
+               var pwrst = document.getElementById('password-warning-suggestion');
+               //var register = document.getElementById('register');
+               var email = document.getElementById('signupemail');
+
+               let passemail = document.querySelectorAll("#signuppass1, #signupemail");
+               passemail.forEach(function (element) {
+                   element.addEventListener('input', function () {
+                       var val = password.value;
+                       var result = zxcvbn(val);
+
+                       // Update the password strength meter
+                       console.log(result.score);
+                       meter.src="images/"+result.score+".png";
+               //         var email_exp = /\S+@\S+\.\S+/
+               //         {{!--register.disabled = (result.score <= 2 || email.value == '') //Password Strength => 3, Email != blank --}}
+               //         register.disabled = (result.score <= 2 || !email_exp.test(email.value)) //Password Strength => 3, Email != blank
+               //
+               //         // Update the text indicator
+               //         if (val !== "") {
+               //             pwstr.innerHTML = "Strength: " + strength[result.score];
+               //             if (result.score <= 2){
+               //                 pwrst.innerHTML = result.feedback.warning + ' | ' + result.feedback.suggestions;
+               //             } else {
+               //                 pwrst.innerHTML = "";
+               //             }
+               //         } else {
+               //             pwstr.innerHTML = "";
+               //             pwrst.innerHTML = "";
+               //         }
+               //     });
+               // });
+             });
+           });
+           </script>
     </div>
     {{>footinit}}
   </body>
