@@ -261,7 +261,7 @@ app.post('/actionlogin', (req, res) => {
 app.get('/logout', (req, res) => {
   firebase.auth().signOut()
   .then(function() {
-    console.log("Signed out.");
+    //console.log("Signed out.");
     app.locals.user = false;
     res.redirect('/');
   })
