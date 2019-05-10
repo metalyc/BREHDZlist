@@ -12,22 +12,22 @@
     <div class="container">
         <form action="/newUser" method="post" id="registration_form" name="registration_form">
           <div class="form-group">
-            <label for="signupemail">Email</label>
-            <input type="email" id="signupemail" name="email" class="form-control" value="" placeholder="example@mail.com" required>
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" class="form-control" value="" placeholder="example@mail.com" required>
           </div>
           <div class="form-group">
-            <label for="signuppass1">Password</label>
-            <input type="password" id="signuppass1" name="password1" class="form-control" value="" placeholder="Must be more than 6 characters" required>
+            <label for="password1">Password</label>
+            <input type="password" id="password1" name="password1" class="form-control" value="" placeholder="Must be more than 6 characters" required>
           </div>
-          <img src="" alt="" id="password-strength-meter"></img>
+          <img src="images/0.png" alt="Password score is 0" id="password-strength-meter"></img>
           <div class="form-group">
-            <label for="signuppass2">Re-enter Password</label>
-            <input type="password" id="signuppass2" name="password2" class="form-control" value="" required>
+            <label for="password2">Re-enter Password</label>
+            <input type="password" id="password2" name="password2" class="form-control" value="" required>
           </div>
             <div style="color: red">
                 {{error}}
             </div>
-          <button type="submit" class="btn btn-primary" >Submit</button>
+          <button type="submit" class="btn btn-primary">Submit</button>
             <div style="color: green">
                 {{message}}
             </div>
@@ -41,22 +41,23 @@
                    3: "Safely unguessable: moderate protection from offline slow-hash scenario. (guesses < 10^10)",
                    4: "Very unguessable: strong protection from offline slow-hash scenario. (guesses >= 10^10)"
                }
-               var password = document.getElementById('signuppass1');
+               var password = document.getElementById('password1');
                var meter = document.getElementById('password-strength-meter');
                var pwstr = document.getElementById('password-strength');
                var pwrst = document.getElementById('password-warning-suggestion');
                //var register = document.getElementById('register');
-               var email = document.getElementById('signupemail');
+               var email = document.getElementById('email');
 
-               let passemail = document.querySelectorAll("#signuppass1, #signupemail");
+               let passemail = document.querySelectorAll("#password1, #email");
                passemail.forEach(function (element) {
                    element.addEventListener('input', function () {
                        var val = password.value;
                        var result = zxcvbn(val);
 
                        // Update the password strength meter
-                       console.log(result.score);
+                       //console.log(result.score);
                        meter.src="images/"+result.score+".png";
+                       meter.alt="Password score is "+result.score;
                //         var email_exp = /\S+@\S+\.\S+/
                //         {{!--register.disabled = (result.score <= 2 || email.value == '') //Password Strength => 3, Email != blank --}}
                //         register.disabled = (result.score <= 2 || !email_exp.test(email.value)) //Password Strength => 3, Email != blank

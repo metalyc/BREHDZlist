@@ -222,17 +222,20 @@ app.post('/firebase', function(req, res)
 // POST for user signup
 app.post('/newUser', (request, response) => {
     var email = request.body.email;
-    var pwd1 = request.body.password1;
-    var pwd2 = request.body.password2;
+    var password1 = request.body.password1;
+    var password2 = request.body.password2;
 
-    if (pwd1 === pwd2) {
-        firebase.auth().createUserWithEmailAndPassword(email, pwd1).catch(function (error) {
+    if (password1 === password2) {
+        firebase.auth().createUserWithEmailAndPassword(email, password1)
+        .then(function() {
+          response.render('signup.hbs', {
+              message: `Created account for ${email}`
+          })
+        })
+        .catch(function (error) {
             var errorCode = error.code;
             var errorMessage = error.message;
         });
-        response.render('signup.hbs', {
-            message: `Created account for ${email}`
-        })
     }
 });
 
@@ -242,7 +245,7 @@ app.post('/actionlogin', (req, res) => {
   var pass = req.body.pass;
   firebase.auth().signInWithEmailAndPassword(email, pass)
   .then(function() {
-    console.log("logged in with", email);
+    //console.log("logged in with", email);
     app.locals.user = true;
     hbs.registerHelper('username', () => {
       return email;
