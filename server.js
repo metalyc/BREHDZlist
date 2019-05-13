@@ -4,8 +4,6 @@ const hbs = require('hbs');
 const firebase = require('firebase');
 //const admin = require("firebase-admin");
 const bodyParser = require('body-parser');
-//const url = require('url');
-//const fs = require('fs');
 const expressValidator = require('express-validator');
 var app = express();
 
@@ -15,28 +13,8 @@ const algorithm = 'aes-256-cbc';
 const key = crypto.randomBytes(32);
 const iv = crypto.randomBytes(16);
 
-/*
-app.use(session({ secret: 'krunal', resave: false, saveUninitialized: true }));
-app.use(expressValidator());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
-*/
-var port = process.env.PORT || 8080;
-
 //Needed to use partials folder
 hbs.registerPartials(__dirname + '/views/partials');
-
-//Helpers
-hbs.registerHelper('getCurrentYear', () => {
-    return new Date().getFullYear();
-});
-
-
-//Helpers End
-
-
 app.set('view engine', 'hbs');
 app.use(express.static(__dirname + '/views'));
 
@@ -54,6 +32,10 @@ admin.initializeApp({
 });
 */
 
+///////////
+//helpers//
+///////////
+
 hbs.registerHelper('getYear', () => {
     return new Date().getFullYear();
 });
@@ -62,6 +44,10 @@ hbs.registerHelper('getYear', () => {
 hbs.registerHelper('siteName', () => {
     return 'BREHDZlist';
 });
+
+////////////////
+//Page routing//
+////////////////
 
 //home page
 app.get('/', (req, res) => {
@@ -96,9 +82,13 @@ app.get('/signup', (req, res) => {
     });
 });
 
-app.get('/product/*', (req, res) => {
-  res.render('productspageContinued.hbs');
+app.get('/products/*', (req, res) => {
+  res.render('baseProduct.hbs');
 });
+
+/////////////
+//functions//
+/////////////
 
 function encrypt(phone) {
     let cipher = crypto.createCipheriv('aes-256-cbc', Buffer.from(key), iv);
@@ -148,7 +138,7 @@ function addData(name, price, condition, location, image, phone)
     var decryptedphone = decrypt(encryptedphone);
 
     function getImageForPath(p){
-//      console.log(p);
+        //console.log(p);
         global.XMLHttpRequest = require('xhr2');
 
 
@@ -272,8 +262,6 @@ app.get('/logout', (req, res) => {
     console.log("Error with code:", error.code, "\nWith message:", error.message);
   });
 });
-
-
 
 /////////////////////////////
 //Place all code above here//
