@@ -82,19 +82,26 @@ app.get('/signup', (req, res) => {
     });
 });
 
+//search page
+app.get('/search', (req, res) => {
+  res.render('search.hbs', {
+    title: 'Search'
+  });
+});
+
 //product detail pages
 app.get('/products/:page', (req, res) => {
-  var curUrl = req.params.page;
-  var docRef = firebase.firestore().collection("Products").doc(curUrl);
+  let curUrl = req.params.page;
+  let docRef = firebase.firestore().collection("Products").doc(curUrl);
   docRef.get().then(function(doc) {
-    let phone = doc.data().Phone;
+    let phone = JSON.stringify(decrypt(doc.data().Phone)).split("\\u")[0].substr(1);
     res.render('baseProduct.hbs', {
       name: doc.data().Name,
       price: doc.data().Price,
       img: doc.data().Img,
       location: doc.data().Location,
       condition: doc.data().Condition,
-      phone: JSON.stringify(decrypt(phone)).substring(0, 11) //decrypt(doc.data().Phone) <- doesn't work
+      phone: phone
     });
   }).catch(function(error){
     console.log(error);
