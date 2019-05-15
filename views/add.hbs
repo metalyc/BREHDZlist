@@ -9,101 +9,78 @@
     <script src="AddImage.js"></script>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     {{>navbar}}
-    <br>
-    <h1 align="center">Add a product</h1>
-    <br>
+    <h1 align="center">{{title}}</h1>
     <div class="container">
-
-    <form action="/firebase" method="post">
+      <form action="/firebase" method="post">
         <div class="first">
-            <div class="form-row">
-                <div class="col">
-                    <label for="name">Product Name</label>
-                    <input type="text" class="form-control" id="name" placeholder="Product Name" name="name">
-                </div>
-                <div class="col">
-                    <label for="inputfirstname">Seller Name</label>
-                    <input type="text" class="form-control" placeholder="Seller Name">
-                </div>
-                <div class="col">
-                    <label for="phone_number">Phone Number</label>
-                    <input type="text" class="form-control" id="phone_number" placeholder="Phone Number" name="phone_number">
-                </div>
+          <div class="form-row mt-3">
+            <div class="col-sm mt-3">
+              <label for="name">Product Name</label>
+              <input type="text" class="form-control" id="name" placeholder="Product Name" name="name">
             </div>
-        </div>
-        <div class="email">
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="inputemail">Email</label>
-                    <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
-                </div>
+            <div class="col-sm mt-3">
+              <label for="inputfirstname">Seller Name</label>
+              <input type="text" class="form-control" placeholder="Seller Name">
             </div>
-        </div>
-        <div class="form-group">
-            <label for="inputAddress">Price</label>
-            <input type="text" class="form-control" id="price" placeholder="$" name="price">
-        </div>
-        <div class="form-group">
-            <label for="inputAddress2">Condition</label>
-            <input type="text" class="form-control" id="condition" placeholder="Good,Bad,Excellent" name="condition">
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-4">
-                <label for="location">City</label>
-                <select id="location" class="form-control" name="location">
-                    <option selected>Choose...</option>
-                    <option>Vancouver</option>
-                    <option>Burnaby</option>
-                    <option>Surrey</option>
-                </select>
+            <div class="col-sm mt-3">
+              <label for="phone_number">Phone Number</label>
+              <input type="text" class="form-control" id="phone_number" placeholder="Phone Number" name="phone_number">
             </div>
+          </div>
+          <div class="form-row mt-3">
+            <div class="col-sm mt-3">
+              <label for="inputAddress">Price</label>
+              <input type="text" class="form-control" id="price" placeholder="$" name="price">
+            </div>
+            <div class="col-sm mt-3">
+              <label for="inputAddress2">Condition</label>
+              <input type="text" class="form-control" id="condition" placeholder="Good,Bad,Excellent" name="condition">
+            </div>
+            <div class="col-sm mt-3">
+              <label for="location">City</label>
+              <select id="location" class="form-control" name="location">
+                <option selected>Choose...</option>
+                <option>Vancouver</option>
+                <option>Burnaby</option>
+                <option>Surrey</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row mt-3">
+            <div class="col-sm mt-3" style="font-size: 18px">
+              Submit an image:
+              <input type="file" id="fileButton" name="something" onclick="imageUpload()">
+              <progress value="0" max="100" id="uploader">0%</progress>
+            </div>
+            <div class="col-sm mt-3">
+              <div class="g-recaptcha" data-sitekey="6Lcdi6IUAAAAAIb75r4wXBG9BpOOa1WnhGocDsQ0"></div>
+            </div>
+            <div class="col-sm mt-3">
+              <button type="submit" class="btn btn-primary btn-lg btn-block">Post</button>
+            </div>
+          </div>
         </div>
-        <div class="form-row">
-        <label style="font-size: 18px">
-            Submit an image:
-            <input type="file" id="fileButton" name="something" onclick="imageUpload()">
-            <progress value="0" max="100" id="uploader">0%</progress>
-
-        </label>
-        </div>
-
-        <br>
-
-        <div class="g-recaptcha" data-sitekey="6Lcdi6IUAAAAAIb75r4wXBG9BpOOa1WnhGocDsQ0"></div>
-        <br/>
-        <div style="color: red">
-        {{error}}
-        </div>
-        <br>
-        <br>
-
-        <button type="submit" class="btn btn-primary">Post</button>
-    </form>
+      </form>
     </div>
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js"></script>
     <script>
-      // Will put our custom code here.
-    </script>
-    <script>
-    $(document).ready(function() {
-      $('#comment_form').submit(function() {
-        $(this).ajaxSubmit({
-          error: function(xhr) {
-            status('Error: ' + xhr.status);
-          },
-         success: function(response) {
-          console.log(response);
-         }
+      $(document).ready(function() {
+        $('#comment_form').submit(function() {
+          $(this).ajaxSubmit({
+            error: function(xhr) {
+              status('Error: ' + xhr.status);
+            },
+           success: function(response) {
+            console.log(response);
+           }
+          });
+          //Very important line, it disable the page refresh.
+          return false;
         });
-        //Very important line, it disable the page refresh.
-        return false;
       });
-    });
-  </script>
-
-
+    </script>
     {{>footinit}}
   </body>
 </html>
