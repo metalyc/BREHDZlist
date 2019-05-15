@@ -10,7 +10,7 @@ var app = express();
 //Encryption Stuff
 const crypto = require('crypto');
 const algorithm = 'aes-256-cbc';
-const key = crypto.randomBytes(32);
+const key = "dc40d732e3e90dc6387dc107a26b6311";
 const iv = crypto.randomBytes(16);
 
 //Needed to use partials folder
@@ -87,14 +87,17 @@ app.get('/products/:page', (req, res) => {
   var curUrl = req.params.page;
   var docRef = firebase.firestore().collection("Products").doc(curUrl);
   docRef.get().then(function(doc) {
+    let phone = doc.data().Phone;
     res.render('baseProduct.hbs', {
       name: doc.data().Name,
       price: doc.data().Price,
       img: doc.data().Img,
       location: doc.data().Location,
       condition: doc.data().Condition,
-      phone: doc.data().Phone //decrypt(doc.data().Phone) <- doesn't work
+      phone: JSON.stringify(decrypt(phone)).substring(0, 11) //decrypt(doc.data().Phone) <- doesn't work
     });
+  }).catch(function(error){
+    console.log(error);
   });
 });
 
@@ -116,9 +119,10 @@ function decrypt(phone) {
     let iv = Buffer.from(phone.iv, 'hex');
     let encryptedText = Buffer.from(phone.encryptedData, 'hex');
     let decipher = crypto.createDecipheriv('aes-256-cbc', Buffer.from(key), iv);
+    decipher.setAutoPadding(false);
     let decrypted = decipher.update(encryptedText);
     decrypted = Buffer.concat([decrypted, decipher.final()]);
-    return decrypted.toString();
+  return decrypted.toString();
 }
 
 //const firebase=require('firebase');
