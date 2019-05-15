@@ -148,7 +148,7 @@ var db = firebase.firestore();
 //  console.log(db);
 
 const request = require('request');
-function addData(name, price, condition, location, image, phone)
+function addData(name, price, condition, location, image, phone, category)
 {
   console.log(image);
 
@@ -158,6 +158,7 @@ function addData(name, price, condition, location, image, phone)
     var thelocation = location;
     var theImg = image;
     var theNumber = phone;
+    var theCategory = category
     var encryptedphone = encrypt(phone);
     var decryptedphone = decrypt(encryptedphone);
 
@@ -179,7 +180,8 @@ function addData(name, price, condition, location, image, phone)
                     Location: location,
                     Condition: condition,
                     Phone: encryptedphone,
-                    Img: url
+                    Img: url,
+                    Category: category
                   }).then(function(docRef) {
                     console.log("Document written with ID: ", docRef.id);
                     console.log(encryptedphone);
@@ -205,6 +207,7 @@ app.post('/firebase', function(req, res)
     var location=req.body.location;
     var img = req.body.something;
     var phone = req.body.phone_number;
+    var category=req.body.category;
     console.log(img);
 
     if(req.body['g-recaptcha-response'] === undefined || req.body['g-recaptcha-response'] === '' || req.body['g-recaptcha-response'] === null)
@@ -226,7 +229,7 @@ app.post('/firebase', function(req, res)
    //res.json({"responseSuccess" : "Sucess"});
    else
      {
-       addData(name, price, condition, location, img, phone);
+       addData(name, price, condition, location, img, phone, category);
        res.redirect('/');
      }
 
@@ -268,7 +271,7 @@ app.post('/search', function(req, res)
     firebase.firestore().collection("Products").get().then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
 
-          if(proname === doc.data().Name)
+          if(proname === doc.data().Name && category === doc.data().Category)
           {
             //var tablename=Math.random();
             var tablename='hello';
@@ -344,7 +347,7 @@ app.get('*', (req, res) => {
 
 //start server
 app.use(express.static(__dirname));
-var server = app.listen(process.env.PORT || 8080, () => {
+var server = app.listen(process.env.PORT || 8000, () => {
     console.log('server is listening on port', server.address().port);
 });
 
