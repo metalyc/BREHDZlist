@@ -28,5 +28,15 @@ label
 .card
 {
   border: solid black 2px;
-}
+  cursor: pointer;
 
+}
+a.custom-card,
+a.custom-card:hover
+{
+  color: inherit;
+}
+.btn btn-primary
+{
+  padding-left: 10000px
+}

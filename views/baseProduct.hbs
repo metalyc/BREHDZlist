@@ -3,15 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <title>{{title}}</title>
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+      <link rel="stylesheet" href="css/stylesheet.css">
     {{>headinit}}
 </head>
 <body>
     {{>navbar}}
-    <h1>{{name}} - ${{price}}</h1>
-    <img src="{{img}}" alt="A picture of {{name}}" style="height: auto; width: auto; max-width: 600px; max-height: 600px;">
-    <p>Location: <b>{{location}}</b></p>
-    <p>Condition: <b>{{condition}}</b></p>
-    <p>Phone: <b>{{phone}}</b></p>
+    <div class="container">
+    <h1>{{name}} <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+  Get Contact
+</button></h1>
+    <hr>
+    <img src="{{img}}" alt="A picture of {{name}}" height="300px" width="400px" align="center">
+    <hr>
+    <h3> <strong>${{price}}</strong></h3>
+    <hr>
+    <p><b>Location: </b>{{location}}</p>
+    <p><b>Condition: </b>{{condition}}</p>
+
     {{>footinit}}
+  </div>
+
+
+
+  <!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Solve the ReCaptcha to get the contact</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <div class="g-recaptcha" data-sitekey="6Lcdi6IUAAAAAIb75r4wXBG9BpOOa1WnhGocDsQ0"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js"></script>
+<script>
+$(document).ready(function() {
+  $('#comment_form').submit(function() {
+    $(this).ajaxSubmit({
+      error: function(xhr) {
+        status('Error: ' + xhr.status);
+      },
+     success: function(response) {
+      console.log(response);
+     }
+    });
+    //Very important line, it disable the page refresh.
+    return false;
+  });
+});
+</script>
 </body>
 </html>
