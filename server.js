@@ -271,7 +271,7 @@ app.post('/search', function(req, res)
     firebase.firestore().collection("Products").get().then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
 
-          if(proname === doc.data().Name && category === doc.data().Category)
+          if((proname === doc.data().Name && category === doc.data().Category) || (proname === doc.data().Name && category === 'choose') || proname === '' && category === doc. data(). Category)
           {
             //var tablename=Math.random();
             var tablename='hello';
