@@ -82,8 +82,20 @@ app.get('/signup', (req, res) => {
     });
 });
 
-app.get('/products/*', (req, res) => {
-  res.render('baseProduct.hbs');
+//product detail pages
+app.get('/products/:page', (req, res) => {
+  var curUrl = req.params.page;
+  var docRef = firebase.firestore().collection("Products").doc(curUrl);
+  docRef.get().then(function(doc) {
+    res.render('baseProduct.hbs', {
+      name: doc.data().Name,
+      price: doc.data().Price,
+      img: doc.data().Img,
+      location: doc.data().Location,
+      condition: doc.data().Condition,
+      phone: doc.data().Phone //decrypt(doc.data().Phone) <- doesn't work
+    });
+  });
 });
 
 /////////////
@@ -209,7 +221,11 @@ app.post('/firebase', function(req, res)
  });
 });
 
-// POST for user signup
+//////////////////
+//Authentication//
+//////////////////
+
+//post for user signup
 app.post('/newUser', (request, response) => {
     var email = request.body.email;
     var password1 = request.body.password1;

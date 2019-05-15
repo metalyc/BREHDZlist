@@ -7,19 +7,11 @@
 </head>
 <body>
     {{>navbar}}
-    <div id="test"></div>
+    <h1>{{name}} - ${{price}}</h1>
+    <img src="{{img}}" alt="A picture of {{name}}">
+    <p>Location: <b>{{location}}</b></p>
+    <p>Condition: <b>{{condition}}</b></p>
+    <p>Phone: <b>{{phone}} <- Decrypt this, plz</b></p>
     {{>footinit}}
-    <script>
-      var curUrl = window.location.pathname.split("/")[2];
-      var docRef = firebase.firestore().collection("Products").doc(curUrl);
-      docRef.get().then(function(doc) {
-        document.getElementById('test').innerHTML =
-          `<h1>` + doc.data().Name + ` - $` + doc.data().Price + `</h1>
-          <img src="` + doc.data().Img + `" alt="A picture of ` + doc.data().Name + `">
-          <p>Location: <b>` + doc.data().Location + `</b></p>
-          <p>Condition: <b>` + doc.data().Condition + `</b></p>
-          <p>Phone: <b>` + doc.data().Phone + `</b></p>`
-      });
-    </script>
 </body>
 </html>
