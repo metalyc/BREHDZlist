@@ -205,6 +205,8 @@ app.post('/firebase', function(req, res)
     var location=req.body.location;
     var img = req.body.something;
     var phone = req.body.phone_number;
+    var email = req.body.email;
+    console.log(email);
     console.log(img);
 
     if(req.body['g-recaptcha-response'] === undefined || req.body['g-recaptcha-response'] === '' || req.body['g-recaptcha-response'] === null)
