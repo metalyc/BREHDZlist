@@ -148,7 +148,7 @@ var db = firebase.firestore();
 //  console.log(db);
 
 const request = require('request');
-function addData(name, price, condition, location, image, phone, category)
+function addData(name, price, condition, location, image, phone, category, email)
 {
   console.log(image);
 
@@ -181,7 +181,8 @@ function addData(name, price, condition, location, image, phone, category)
                     Condition: condition,
                     Phone: encryptedphone,
                     Img: url,
-                    Category: category
+                    Category: category,
+                    Email: email
                   }).then(function(docRef) {
                     console.log("Document written with ID: ", docRef.id);
                     console.log(encryptedphone);
@@ -231,7 +232,7 @@ app.post('/firebase', function(req, res)
    //res.json({"responseSuccess" : "Sucess"});
    else
      {
-       addData(name, price, condition, location, img, phone, category);
+       addData(name, price, condition, location, img, phone, category, email);
        res.redirect('/');
      }
 
