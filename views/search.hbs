@@ -9,16 +9,16 @@
 
 <body>
     {{>navbar}}
-    <form action="" method="POST">
+    <form action="/search" method="POST">
         <div class="form-row">
             <div class="col">
                 <label for="search">Search</label>
-                <input type="text" class="form-control" id="search" placeholder="Search">
+                <input type="text" class="form-control" id="search" placeholder="Search" name="productname">
             </div>
             <div class="col">
                 <label for="category">Category</label>
                 <select id="category" class="form-control" name="category">
-                    <option value="all" selected>Choose... </option>
+                    <option value="choose" selected>Choose... </option>
                     <option value="automotive">Automotive</option>
                     <option value="antique">Antiques</option>
                     <option value="appliances">Appliances</option>

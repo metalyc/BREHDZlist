@@ -82,6 +82,7 @@ app.get('/signup', (req, res) => {
     });
 });
 
+//product detail pages
 //search page
 app.get('/search', (req, res) => {
   res.render('search.hbs', {
@@ -89,19 +90,19 @@ app.get('/search', (req, res) => {
   });
 });
 
-//product detail pages
+
 app.get('/products/:page', (req, res) => {
-  let curUrl = req.params.page;
-  let docRef = firebase.firestore().collection("Products").doc(curUrl);
+  var curUrl = req.params.page;
+  var docRef = firebase.firestore().collection("Products").doc(curUrl);
   docRef.get().then(function(doc) {
-    let phone = JSON.stringify(decrypt(doc.data().Phone)).split("\\u")[0].substr(1);
+    let phone = doc.data().Phone;
     res.render('baseProduct.hbs', {
       name: doc.data().Name,
       price: doc.data().Price,
       img: doc.data().Img,
       location: doc.data().Location,
       condition: doc.data().Condition,
-      phone: phone
+      phone: JSON.stringify(decrypt(phone)).substring(0, 11) //decrypt(doc.data().Phone) <- doesn't work
     });
   }).catch(function(error){
     console.log(error);
@@ -254,6 +255,44 @@ app.post('/newUser', (request, response) => {
             var errorMessage = error.message;
         });
     }
+});
+
+app.post('/search', function(req, res)
+{
+    var proname = req.body.productname;
+    var category=req.body.category;
+    var arr = [];
+    var curUrl = req.params.page;
+    var docRef = firebase.firestore().collection("Products").doc()
+
+    firebase.firestore().collection("Products").get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+
+          if(proname === doc.data().Name)
+          {
+            //var tablename=Math.random();
+            var tablename='hello';
+            console.log('hello');
+            var name=doc.data().Name;
+            //var price=req.body.price;
+            var condition=doc.data().Condition;
+            var location= doc.data().Location;
+            var img =  doc.data().Img;
+            var price = doc.data().Price;
+            var id = doc._key.path.segments[6];
+            arr.push({Price: price, Name: name, Condition: condition, Location: location, Img: img, id: id});
+
+
+        }
+  });
+  console.log(arr);
+
+  res.render('results.hbs', {
+    arr: arr
+  });
+
+});
+
 });
 
 //post for login and helper for username
