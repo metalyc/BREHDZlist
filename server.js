@@ -260,28 +260,39 @@ app.post('/newUser', (request, response) => {
 app.post('/search', function(req, res)
 {
     var proname = req.body.productname;
+    var category=req.body.category;
     var arr = [];
+    var curUrl = req.params.page;
+    var docRef = firebase.firestore().collection("Products").doc()
+
     firebase.firestore().collection("Products").get().then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
+
           if(proname === doc.data().Name)
           {
             //var tablename=Math.random();
             var tablename='hello';
+            console.log('hello');
             var name=doc.data().Name;
             //var price=req.body.price;
             var condition=doc.data().Condition;
             var location= doc.data().Location;
             var img =  doc.data().Img;
             var price = doc.data().Price;
-          var obj = {Price: price, Name: name, Condition: condition, Location: location, ImageUrl: img, Phone: phone}
-          arr.append(obj);
-          console.log(obj);
+            var id = doc._key.path.segments[6];
+            arr.push({Price: price, Name: name, Condition: condition, Location: location, Img: img, id: id});
+
+
         }
   });
+  console.log(arr);
+
+  res.render('results.hbs', {
+    arr: arr
+  });
+
 });
-res.render('add.hbs', {
-  title: 'dasdas'
-});
+
 });
 
 //post for login and helper for username
