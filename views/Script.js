@@ -2,7 +2,7 @@ function getProducts(){
     firebase.firestore().collection("Products").get().then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
             document.getElementById('products').innerHTML += `<a href="products/` + doc._key.path.segments[6] + `" class="custom-card"><div class="card m-1" style="width: 16rem; height: 25rem">
-                    <img class="card-img-top" src="` + doc.data().Img + `" alt="A picture of ` + doc.data().Name + `" style="height: auto; width: auto; max-width: 150px; max-height: 150px; margin-top: 5px; margin-left: auto; margin-right: auto;">
+                    <img class="card-img-top" src="` + doc.data().Img + `" alt="A picture of ` + doc.data().Name + `" style="height: auto; width: auto; max-width: 15rem; max-height: 15rem; margin-top: 5px; margin-left: auto; margin-right: auto;">
                     <div class="card-body">
                       <h5 class="card-title">` + doc.data().Name + `</h5>
                       <p class="card-text">Location: <b>` + doc.data().Location + `</b></p>
