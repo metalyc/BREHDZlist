@@ -82,6 +82,13 @@ app.get('/signup', (req, res) => {
     });
 });
 
+//search page
+app.get('/search', (req, res) => {
+  res.render('search.hbs', {
+    title: 'Search'
+  });
+});
+
 //product detail pages
 app.get('/products/:page', (req, res) => {
   var curUrl = req.params.page;
