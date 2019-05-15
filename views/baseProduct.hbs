@@ -7,7 +7,14 @@
 </head>
 <body>
     {{>navbar}}
-    test
+    <div id="test"></div>
     {{>footinit}}
+    <script>
+      var curUrl = window.location.pathname.split("/")[2];
+      var docRef = firebase.firestore().collection("Products").doc(curUrl);
+      docRef.get().then(function(doc) {
+        document.getElementById('test').innerHTML = `<h1>` + doc.data().Name + `</h1>`;
+      });
+    </script>
 </body>
 </html>
