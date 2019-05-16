@@ -296,8 +296,9 @@ app.post('/search', function(req, res) {
         var location= doc.data().Location;
         var img =  doc.data().Img;
         var price = doc.data().Price;
+        var category1 = doc.data().Category;
         var id = doc._key.path.segments[6];
-        arr.push({Price: price, Name: name, Condition: condition, Location: location, Img: img, id: id});
+        arr.push({Price: price, Name: name, Condition: condition, Location: location, Img: img, id:id , Category:category1});
       }
     });
     console.log(arr);

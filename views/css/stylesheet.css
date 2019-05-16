@@ -31,12 +31,3 @@ label
   cursor: pointer;
 
 }
-a.custom-card,
-a.custom-card:hover
-{
-  color: inherit;
-}
-.btn btn-primary
-{
-  padding-left: 10000px
-}

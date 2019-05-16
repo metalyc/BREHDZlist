@@ -3,29 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    {{>headinit}}
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="css/stylesheet.css">
 </head>
 <body>
-{{# each arr}}
+  {{>navbar}}
   <div class="container">
+    <h1 align="center">Search Results</h1>
+    <hr>
+    <br>
+    <div class="row justify-content-center">
+      {{# each arr}}
 
-    <a href="/products/{{this.id}}  " class="custom-card"><div class="card m-1" style="width: 16rem; height: 25rem">
-            <img class="card-img-top" src="{{this.Img}}" alt="A picture of   {{this.Name}}  " style="height: auto; width: auto; max-width: 150px; max-height: 150px; margin-top: 5px; margin-left: auto; margin-right: auto;">
-            <div class="card-body">
-              <h5 class="card-title">  {{this.Name}}  </h5>
-              <p class="card-text">Location: <b> {{this.Location}}  </b></p>
-              <p class="card-text">Condition: <b>  {{this.Condition}}  </b></p>
+        <a href="/products/{{this.id}}" class="card btn btn-outline-secondary mx-1 mt-2" style="width: 16rem; max-height: 25rem">
+                <img class="card-img-top" src="{{this.Img}}" alt="A picture of   {{this.Name}}  " style="width: 100%; max-height: 9rem; object-fit: cover">
+                <div class="card-body">
+                  <h5 class="card-title">  {{this.Name}}  </h5>
+                  <p class="card-text">Location: <b> {{this.Location}}  </b></p>
+                  <p class="card-text">Category: <b> {{this.Category}}  </b></p>
+                  <p class="card-text">Condition: <b>  {{this.Condition}}  </b></p>
 
-            </div>
-              <div class="card-footer text-muted text-center">
-                <p class="card-text"> $  {{this.Price}}  </p>
-              </div>
-          </div></a>
+                </div>
+                  <div class="card-footer text-muted text-center">
+                    <p class="card-text"> $  {{this.Price}}  </p>
+                  </div>
+       </a>
+      {{/each}}
+    </div>
 
 
   </div>
-  {{/each}}
+
 
 
 
