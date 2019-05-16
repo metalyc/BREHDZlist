@@ -45,14 +45,6 @@ hbs.registerHelper('siteName', () => {
     return 'BREHDZlist';
 });
 
-//comment required
-hbs.registerHelper('ifCond', function(v1, v2, options) {
-  if(v1 === v2) {
-    return options.fn(this);
-  }
-  return options.inverse(this);
-});
-
 ////////////////
 //Page routing//
 ////////////////
@@ -118,8 +110,10 @@ app.get('/products/:page', (req, res) => {
         img: doc.data().Img,
         location: doc.data().Location,
         condition: doc.data().Condition,
+        email: doc.data().Email,
         phone: phone,
-        human: false
+        human: false,
+        category: doc.data().Category
       });
     } else {
       res.render('baseProduct.hbs', {
@@ -128,8 +122,10 @@ app.get('/products/:page', (req, res) => {
         img: doc.data().Img,
         location: doc.data().Location,
         condition: doc.data().Condition,
+        email: doc.data().Email,
         phone: phone,
-        human: true
+        human: true,
+        category: doc.data().Category
       });
     }
   });
@@ -256,8 +252,8 @@ app.post('/firebase', function(req, res) {
   });
 });
 
-  //captcha lock for contact info in product details
-  app.post('/getcontact', (req, res) => {
+//captcha lock for contact info in product details
+app.post('/getcontact', (req, res) => {
   if(req.body['g-recaptcha-response'] === undefined || req.body['g-recaptcha-response'] === '' || req.body['g-recaptcha-response'] === null) {
     //return res.json({"responseError" : "Please select captcha first"});
   }
@@ -302,6 +298,7 @@ app.post('/search', function(req, res) {
     });
     console.log(arr);
     res.render('results.hbs', {
+      title: "Search Results",
       arr: arr
     });
   });
@@ -380,7 +377,7 @@ app.get('*', (req, res) => {
 
 //start server
 app.use(express.static(__dirname));
-var server = app.listen(process.env.PORT || 8000, () => {
+var server = app.listen(process.env.PORT || 8080, () => {
     console.log('server is listening on port', server.address().port);
 });
 
