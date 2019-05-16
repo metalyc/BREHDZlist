@@ -9,20 +9,26 @@
   <body>
     {{>navbar}}
     <div class="container">
-      {{#if human}}
-        <h1 style="float: left">{{name}}</h1>
-        <h5 style="background: grey; float: right; padding: 5px; margin-top: 20px">Contact: {{phone}}</h5>
-      {{else}}
-        <h1 style="float: left">{{name}}</h1>
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" style="float: right; margin-top: 15px">Get Contact</button>
-      {{/if}}
+      <h1 class="row container">{{name}}</h1>
       <hr>
-      <img src="{{img}}" alt="A picture of {{name}}" style="max-height: 1000px; max-width:1000px; height: auto; width: auto;" align="center">
+      <div class="row">
+        <img class="container" src="{{img}}" alt="A picture of {{name}}" style="max-height: 600px; height: 100%; width: auto;">
+      </div>
       <hr>
-      <h3> <strong>${{price}}</strong></h3>
-      <hr>
-      <p><b>Location: </b>{{location}}</p>
-      <p><b>Condition: </b>{{condition}}</p>
+      <div class="container row">
+        <p><b>Location: </b>{{location}}</p>
+      </div>
+      <div class="container row">
+        <p><b>Condition: </b>{{condition}}</p>
+      </div>
+      <div class="row card">
+        {{#if human}}
+          <p class="container"><b>Phone: </b>{{phone}}</p> <!--style="background: grey; float: right; padding: 5px; margin-top: 20px"-->
+          <p class="container"><b>Email: </b>{{email}}</p>
+        {{else}}
+          <p class="container"><b>Contact info: </b><a type="button" data-toggle="modal" data-target="#exampleModal"><u style="color: blue;">Click to show</u></a></p>
+        {{/if}}
+      </div>
     </div>
 
     <!-- Modal -->
