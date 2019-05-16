@@ -119,7 +119,8 @@ app.get('/products/:page', (req, res) => {
         location: doc.data().Location,
         condition: doc.data().Condition,
         phone: phone,
-        human: false
+        human: false,
+        category: doc.data().Category
       });
     } else {
       res.render('baseProduct.hbs', {
@@ -129,7 +130,8 @@ app.get('/products/:page', (req, res) => {
         location: doc.data().Location,
         condition: doc.data().Condition,
         phone: phone,
-        human: true
+        human: true,
+        category: doc.data().Category
       });
     }
   });

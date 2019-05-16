@@ -9,19 +9,22 @@
   <body>
     {{>navbar}}
     <div class="container">
-      <h1 class="row container">{{name}}</h1>
+      <h1 class="container">{{name}}</h1>
       <hr>
-      <div class="row">
-        <img class="container" src="{{img}}" alt="A picture of {{name}}" style="max-height: 600px; height: 100%; width: auto;">
+      <div class="container">
+        <img src="{{img}}" alt="A picture of {{name}}" style="max-height: 600px; height: 100%; width: auto;">
       </div>
       <hr>
-      <div class="container row">
+      <div class="container">
         <p><b>Location: </b>{{location}}</p>
       </div>
-      <div class="container row">
+      <div class="container">
         <p><b>Condition: </b>{{condition}}</p>
       </div>
-      <div class="row card">
+      <div class="container">
+        <p><b>Category: </b>{{category}}</p>
+      </div>
+      <div class="container card">
         {{#if human}}
           <p class="container"><b>Phone: </b>{{phone}}</p> <!--style="background: grey; float: right; padding: 5px; margin-top: 20px"-->
           <p class="container"><b>Email: </b>{{email}}</p>
