@@ -45,14 +45,6 @@ hbs.registerHelper('siteName', () => {
     return 'BREHDZlist';
 });
 
-//comment required
-hbs.registerHelper('ifCond', function(v1, v2, options) {
-  if(v1 === v2) {
-    return options.fn(this);
-  }
-  return options.inverse(this);
-});
-
 ////////////////
 //Page routing//
 ////////////////
@@ -258,8 +250,8 @@ app.post('/firebase', function(req, res) {
   });
 });
 
-  //captcha lock for contact info in product details
-  app.post('/getcontact', (req, res) => {
+//captcha lock for contact info in product details
+app.post('/getcontact', (req, res) => {
   if(req.body['g-recaptcha-response'] === undefined || req.body['g-recaptcha-response'] === '' || req.body['g-recaptcha-response'] === null) {
     //return res.json({"responseError" : "Please select captcha first"});
   }
@@ -304,6 +296,7 @@ app.post('/search', function(req, res) {
     });
     console.log(arr);
     res.render('results.hbs', {
+      title: "Search Results",
       arr: arr
     });
   });
