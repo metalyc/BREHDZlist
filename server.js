@@ -12,15 +12,12 @@ const crypto = require('crypto');
 const algorithm = 'aes-256-cbc';
 const key = "dc40d732e3e90dc6387dc107a26b6311";
 const iv = crypto.randomBytes(16);
-
 var flag = 0;
-
 
 //Needed to use partials folder
 hbs.registerPartials(__dirname + '/views/partials');
 app.set('view engine', 'hbs');
 app.use(express.static(__dirname + '/views'));
-
 app.use(expressValidator()); //what does this do?
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -48,6 +45,7 @@ hbs.registerHelper('siteName', () => {
     return 'BREHDZlist';
 });
 
+//comment required
 hbs.registerHelper('ifCond', function(v1, v2, options) {
   if(v1 === v2) {
     return options.fn(this);
@@ -66,6 +64,8 @@ app.get('/', (req, res) => {
         title: 'Home'
     });
 });
+
+//product listing page
 app.get('/products', (req, res) => {
   flag = 0;
     res.render('abc.hbs', {
@@ -97,9 +97,7 @@ app.get('/signup', (req, res) => {
     });
 });
 
-//product detail pages
 //search page
-
 app.get('/search', (req, res) => {
   flag = 0;
   res.render('search.hbs', {
@@ -107,6 +105,7 @@ app.get('/search', (req, res) => {
   });
 });
 
+//product detail pages
 app.get('/products/:page', (req, res) => {
   var curUrl = req.params.page;
   var docRef = firebase.firestore().collection("Products").doc(curUrl);
