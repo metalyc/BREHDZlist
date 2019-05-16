@@ -9,6 +9,10 @@
 
 <body>
     {{>navbar}}
+    <h1 align="center">Search for a product </h1>
+    <div class="container">
+      <hr>
+      <br>
     <form action="/search" method="POST">
         <div class="form-row">
             <div class="col">
@@ -49,11 +53,13 @@
                 </select>
             </div>
         </div>
+        <br>
         <div class="form-row">
             <div class="col">
                 <button type="submit" class="btn btn-primary">Search</button>
             </div>
         </div>
     </form>
+  </div>
     {{>footinit}}
 </body>

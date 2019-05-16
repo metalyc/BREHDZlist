@@ -13,6 +13,9 @@ const algorithm = 'aes-256-cbc';
 const key = "dc40d732e3e90dc6387dc107a26b6311";
 const iv = crypto.randomBytes(16);
 
+var flag = 0;
+
+
 //Needed to use partials folder
 hbs.registerPartials(__dirname + '/views/partials');
 app.set('view engine', 'hbs');
@@ -51,11 +54,13 @@ hbs.registerHelper('siteName', () => {
 
 //home page
 app.get('/', (req, res) => {
+  flag = 0;
     res.render('home.hbs', {
         title: 'Home'
     });
 });
 app.get('/products', (req, res) => {
+  flag = 0;
     res.render('abc.hbs', {
         title: 'Products'
     });
@@ -63,6 +68,7 @@ app.get('/products', (req, res) => {
 
 //add products page
 app.get('/add', (req, res) => {
+  flag = 0;
     res.render('add.hbs', {
         title: 'Add a Product'
     });
@@ -70,6 +76,7 @@ app.get('/add', (req, res) => {
 
 //login page
 app.get('/login', (req, res) => {
+  flag = 0;
     res.render('login.hbs', {
         title: 'Login'
     });
@@ -77,6 +84,7 @@ app.get('/login', (req, res) => {
 
 //signup page
 app.get('/signup', (req, res) => {
+  flag = 0;
     res.render('signup.hbs', {
         title: 'Signup'
     });
@@ -84,29 +92,53 @@ app.get('/signup', (req, res) => {
 
 //product detail pages
 //search page
+
+hbs.registerHelper('ifCond', function(v1, v2, options) {
+  if(v1 === v2) {
+    return options.fn(this);
+  }
+  return options.inverse(this);
+});
+
 app.get('/search', (req, res) => {
+  flag = 0;
   res.render('search.hbs', {
     title: 'Search'
   });
 });
-
 
 app.get('/products/:page', (req, res) => {
   var curUrl = req.params.page;
   var docRef = firebase.firestore().collection("Products").doc(curUrl);
   docRef.get().then(function(doc) {
     let phone = doc.data().Phone;
-    res.render('baseProduct.hbs', {
-      name: doc.data().Name,
-      price: doc.data().Price,
-      img: doc.data().Img,
-      location: doc.data().Location,
-      condition: doc.data().Condition,
-      phone: JSON.stringify(decrypt(phone)).substring(0, 11) //decrypt(doc.data().Phone) <- doesn't work
-    });
-  }).catch(function(error){
-    console.log(error);
-  });
+    if(flag === 0)
+    {
+          res.render('baseProduct.hbs', {
+            name: doc.data().Name,
+            price: doc.data().Price,
+            img: doc.data().Img,
+            location: doc.data().Location,
+            condition: doc.data().Condition,
+            phone: JSON.stringify(decrypt(phone)).substring(1, 11),
+            human: 'No'
+          });
+
+    }
+    else
+    {
+          res.render('baseProduct.hbs', {
+            name: doc.data().Name,
+            price: doc.data().Price,
+            img: doc.data().Img,
+            location: doc.data().Location,
+            condition: doc.data().Condition,
+            phone: JSON.stringify(decrypt(phone)).substring(1, 11),
+            human: 'Yes'
+          });
+
+    }
+});
 });
 
 /////////////
@@ -261,6 +293,31 @@ app.post('/newUser', (request, response) => {
             var errorMessage = error.message;
         });
     }
+});
+
+app.post('/getcontact', (req, res) => {
+  if(req.body['g-recaptcha-response'] === undefined || req.body['g-recaptcha-response'] === '' || req.body['g-recaptcha-response'] === null)
+{
+ //return res.json({"responseError" : "Please select captcha first"});
+}
+const secretKey = "6Lcdi6IUAAAAAL-HspS-Y9UmWuoE0ToxT8BSXjnc";
+
+const verificationURL = "https://www.google.com/recaptcha/api/siteverify?secret=" + secretKey + "&response=" + req.body['g-recaptcha-response'] + "&remoteip=" + req.connection.remoteAddress;
+
+request(verificationURL,function(error,response,body) {
+ body = JSON.parse(body);
+
+ if(body.success !== undefined && !body.success) {
+   console.log('Failed');    //return res.json({"responseError" : "Failed captcha verification"});
+ }
+ //res.json({"responseSuccess" : "Sucess"});
+ else
+   {
+     flag = 1;
+     res.redirect('back');
+
+   }
+});
 });
 
 app.post('/search', function(req, res)
