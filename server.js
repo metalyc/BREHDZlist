@@ -110,6 +110,7 @@ app.get('/products/:page', (req, res) => {
         img: doc.data().Img,
         location: doc.data().Location,
         condition: doc.data().Condition,
+        email: doc.data().Email,
         phone: phone,
         human: false,
         category: doc.data().Category
@@ -121,6 +122,7 @@ app.get('/products/:page', (req, res) => {
         img: doc.data().Img,
         location: doc.data().Location,
         condition: doc.data().Condition,
+        email: doc.data().Email,
         phone: phone,
         human: true,
         category: doc.data().Category
