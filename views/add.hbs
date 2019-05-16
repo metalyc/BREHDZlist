@@ -37,12 +37,9 @@
               <input type="text" class="form-control" id="condition" placeholder="Good,Bad,Excellent" name="condition">
             </div>
             <div class="col-sm mt-3">
-              <label for="location">City</label>
+              <label for="location">Location</label>
               <select id="location" class="form-control" name="location" required>
-                <option selected value="">Choose...</option>
-                <option>Vancouver</option>
-                <option>Burnaby</option>
-                <option>Surrey</option>
+                  {{>location_list}}
               </select>
             </div>
           </div>
