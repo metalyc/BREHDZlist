@@ -135,6 +135,58 @@ app.get('/products/:page', (req, res) => {
 //functions//
 /////////////
 
+//for searching by user typed names
+function search(w1, w2)
+{
+    let l1 = w1.length;
+    let l2 = w2.length;
+    console.log(w1, w2);
+    let ch,c,maxc=0;
+    let i,j;
+
+    for(i=0;i<l1;i++)
+    {
+        ch = w1.charAt(i);
+
+        for(j=0;j<l2;j++)
+        {
+            if(ch === w2.charAt(j))
+            {
+                c=1;
+                tempi = i;
+                tempj = j;
+
+
+                while (w1.charAt(++tempi) === w2.charAt(++tempj))
+                {
+                    c++;
+                    if(tempi+1>l1 || tempj+1>l2)
+                    {
+                        c--;
+                        break;
+                    }
+
+                }
+
+
+            }
+
+
+            if(c>maxc)
+            {
+                maxc = c;
+            }
+
+        }
+    }
+    let perc_match = maxc/l1*100;
+    console.log(perc_match)
+    return perc_match;
+}
+
+//console.log(search('test', 'new test'));
+
+
 //for encrypting phone numbers before posting to firebase
 function encrypt(phone) {
     let cipher = crypto.createCipheriv('aes-256-cbc', Buffer.from(key), iv);
@@ -281,7 +333,7 @@ app.post('/search', function(req, res) {
   var docRef = firebase.firestore().collection("Products").doc()
   firebase.firestore().collection("Products").get().then((querySnapshot) => {
     querySnapshot.forEach((doc) => {
-      if((proname === doc.data().Name && category === doc.data().Category) || (proname === doc.data().Name && category === '') || proname === '' && category === doc. data(). Category) {
+      if((search(proname, doc.data().Name)>=65 && category === doc.data().Category) || (search(proname, doc.data().Name)>=65 && category === '') || proname === '' && category === doc. data(). Category) {
         //var tablename=Math.random();
         var tablename='hello';
         console.log('hello');
@@ -384,3 +436,4 @@ var server = app.listen(process.env.PORT || 8080, () => {
 /////////////////////////////////////////
 //Don't place code down here, scroll up//
 /////////////////////////////////////////
+

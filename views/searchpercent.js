@@ -30,7 +30,3 @@ function search(w1, w2)
   let perc_match = maxc/l1*100;
   return perc_match;
 }
-
-module.exports(
-  search
-);
