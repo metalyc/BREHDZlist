@@ -281,7 +281,7 @@ app.post('/search', function(req, res) {
   var docRef = firebase.firestore().collection("Products").doc()
   firebase.firestore().collection("Products").get().then((querySnapshot) => {
     querySnapshot.forEach((doc) => {
-      if((proname === doc.data().Name && category === doc.data().Category) || (proname === doc.data().Name && category === 'choose') || proname === '' && category === doc. data(). Category) {
+      if((proname === doc.data().Name && category === doc.data().Category) || (proname === doc.data().Name && category === '') || proname === '' && category === doc. data(). Category) {
         //var tablename=Math.random();
         var tablename='hello';
         console.log('hello');
@@ -377,7 +377,7 @@ app.get('*', (req, res) => {
 
 //start server
 app.use(express.static(__dirname));
-var server = app.listen(process.env.PORT || 8000, () => {
+var server = app.listen(process.env.PORT || 8080, () => {
     console.log('server is listening on port', server.address().port);
 });
 
