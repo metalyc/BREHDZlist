@@ -20,11 +20,11 @@
             </div>
             <div class="col-sm mt-3">
               <label for="email">Email</label>
-              <input type="text" class="form-control" id="email" name="email" value="{{username}}" readonly>
+              <input type="text" class="form-control" id="email" name="email" value="{{username}}" readonly required>
             </div>
             <div class="col-sm mt-3">
               <label for="phone_number">Phone Number</label>
-              <input type="text" class="form-control" id="phone_number" placeholder="Phone Number" name="phone_number">
+              <input type="text" class="form-control" id="phone_number" placeholder="Phone Number" name="phone_number" required>
             </div>
           </div>
           <div class="form-row">
@@ -34,7 +34,7 @@
             </div>
             <div class="col-sm mt-3">
               <label for="inputAddress2">Condition</label>
-              <input type="text" class="form-control" id="condition" placeholder="Good,Bad,Excellent" name="condition">
+              <input type="text" class="form-control" id="condition" placeholder="Good,Bad,Excellent" name="condition" required>
             </div>
             <div class="col-sm mt-3">
               <label for="location">Location</label>
@@ -43,17 +43,27 @@
               </select>
             </div>
           </div>
-          <div>
-            <label for="category">Category</label>
-            <select id="category" class="form-control" name="category" required>
-                {{>category_list}}
-            </select>
+          <div class="form-row">
+            <div class="col-sm-4 mt-2">
+              <div class="row pl-3 pr-3">
+                <label for="category">Category</label>
+                <select id="category" class="form-control" name="category" required>
+                    {{>category_list}}
+                </select>
+              </div>
+              <div class="row mt-3" style="padding-left: 12px; padding-right: 12px;">
+                <div class="custom-file">
+                  <input type="file" class="custom-file-input" id="fileButton" name="something" onclick="imageUpload()" required>
+                  <label class="custom-file-label" for="fileButton">Submit an image</label>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-8">
+              <label for="description">Description</label>
+              <textarea id="description" class="form-control" name="description" rows="3" required></textarea>
+            </div>
           </div>
           <div class="form-row mt-3">
-            <div class="col-sm mt-3 custom-file">
-              <input type="file" class="custom-file-input" id="fileButton" name="something" onclick="imageUpload()">
-              <label class="custom-file-label" for="fileButton">Submit an image</label>
-            </div>
             <div class="col-sm mt-3">
               <div align="center" class="g-recaptcha" data-sitekey="6Lcdi6IUAAAAAIb75r4wXBG9BpOOa1WnhGocDsQ0"></div>
             </div>

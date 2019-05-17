@@ -16,20 +16,24 @@
       </div>
       <hr>
       <div class="container">
-        <p><b>Location: </b>{{location}}</p>
+        <p><strong>Location: </strong>{{location}}</p>
       </div>
       <div class="container">
-        <p><b>Condition: </b>{{condition}}</p>
+        <p><strong>Condition: </strong>{{condition}}</p>
       </div>
       <div class="container">
-        <p><b>Category: </b>{{category}}</p>
+        <p><strong>Category: </strong>{{category}}</p>
+      </div>
+      <div class="container">
+        <p><strong>Description:</strong></p>
+        <p>{{description}}</p>
       </div>
       <div class="container card">
         {{#if human}}
-          <p class="container"><b>Phone: </b>{{phone}}</p> <!--style="background: grey; float: right; padding: 5px; margin-top: 20px"-->
-          <p class="container"><b>Email: </b>{{email}}</p>
+          <p class="container"><strong>Phone: </strong>{{phone}}</p> <!--style="background: grey; float: right; padding: 5px; margin-top: 20px"-->
+          <p class="container"><strong>Email: </strong>{{email}}</p>
         {{else}}
-          <p class="container"><b>Contact info: </b><a type="button" data-toggle="modal" data-target="#exampleModal"><u style="color: blue;">Click to show</u></a></p>
+          <p class="container"><strong>Contact info: </strong><a type="button" data-toggle="modal" data-target="#exampleModal"><u style="color: blue;">Click to show</u></a></p>
         {{/if}}
       </div>
     </div>
