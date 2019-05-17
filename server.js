@@ -228,13 +228,6 @@ var db = firebase.firestore();
 const request = require('request');
 function addData(name, price, condition, location, image, phone, category, email, description) {
   console.log(image);
-  var thename = name;
-  var theprice = price;
-  var thecondition = condition;
-  var thelocation = location;
-  var theImg = image;
-  var theNumber = phone;
-  var theCategory = category
   var encryptedphone = encrypt(phone);
   var decryptedphone = decrypt(encryptedphone);
 
