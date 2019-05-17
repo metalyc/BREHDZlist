@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <title>{{title}}</title>
+      {{>headinit}}
+  </head>
+  <body>
+      {{>navbar}}
+      <h1 align="center">Search for a product </h1>
+      <div class="container">
+        <hr>
+        <br>
+        <form action="/search" method="POST">
+          <div class="form-row">
+              <div class="col">
+                  <label for="search">Search</label>
+                  <input type="text" class="form-control" id="search" placeholder="Search" name="productname">
+              </div>
+              <div class="col">
+                  <label for="category">Category</label>
+                  <select id="category" class="form-control" name="category">
+                      {{>category_list}}
+                  </select>
+              </div>
+              <div class="col">
+                  <label for="location">Location</label>
+                  <select id="location" class="form-control" name="location">
+                      {{>location_list}}
+                  </select>
+              </div>
+          </div>
+          <br>
+          <div class="form-row">
+              <div class="col">
+                  <button type="submit" class="btn btn-primary">Search</button>
+              </div>
+          </div>
+      </form>
+    </div>
+    {{>footinit}}
+  </body>
+</html>

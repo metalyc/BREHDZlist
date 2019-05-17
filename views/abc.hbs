@@ -4,11 +4,14 @@
     <meta charset="UTF-8">
     <title>{{title}}</title>
     {{>headinit}}
-    <script src="/scripts/Script.js"></script>
+    <script src="Script.js"></script>
+    <script>
+      location.reload(forcedReload);
+    </script>
   </head>
   <body>
     {{>navbar}}
-    <h1 style="color: snow" align="center">Products</h1>
+    <h1 align="center">{{title}}</h1>
     <div class="row justify-content-center" id="products"> </div>
     {{>footinit}}
   </body>

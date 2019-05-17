@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>{{title}}</title>
+    {{>headinit}}
+  </head>
+  <body class="d-flex flex-column h-100">
+    {{>navbar}}
+    <div class="container">
+        <form action="/actionlogin" method="post">
+          <div class="form-group">
+            <label for="loginemail">Email</label>
+            <input type="email" id="loginemail" class="form-control" name='email' required>
+          </div>
+          <div class="form-group">
+            <label for="pass">Password</label>
+            <input type="password" id="pass" name="pass" class="form-control" name="password" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Login</button>
+          <div style="color: red">
+              {{message}}
+          </div>
+        </form>
+    </div>
+    {{>footinit}}
+  </body>
+</html>

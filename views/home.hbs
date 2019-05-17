@@ -1,24 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <title>{{title}}</title>
     {{>headinit}}
   </head>
-  <body class="d-flex flex-column h-100">
+  <body>
     {{>navbar}}
-    <div class="container-fluid">
-      <div class="container mb-11">
-        <main class="flex-shrink-0">
-          <div class="jumbotron jumbotron-fluid">
-            <div class="container">
-              <h1 class="display-4">BREHDZlist</h1>
-              <a class="btn btn-primary" href="/products">Products</a>
-              <a class="btn btn-primary" href="/add">Add new</a>
-            </div>
+    <div class="container">
+      <img src="images/logo_transparent.png" class="rounded mx-auto d-block" style="max-width: 600px; max-height: 600px; width: 100%; height: auto;" alt="logo">
+    </div>
+    <!--Jumbo-->
+    <div class="container">
+      <div class="jumbotron">
+        <div class="row">
+          <div class="col-sm" align="center">
+            <h1 class="display-4">Welcome to {{siteName}}!</h1>
           </div>
-        </main>
+        </div>
+        <div class="row">
+          {{#if user}}
+            <div class="col-sm mt-3">
+              <a class="btn btn-primary btn-lg btn-block" href="/add">Post Something to Sell</a>
+            </div>
+            <div class="col-sm mt-3">
+              <a class="btn btn-primary btn-lg btn-block" href="/products">Start Browsing!</a>
+            </div>
+          {{else}}
+            <div class="col-sm mt-3">
+              <a class="btn btn-primary btn-lg btn-block" href="/login">Log in to start shopping</a>
+            </div>
+          {{/if}}
+        </div>
       </div>
+      {{#if message}}
+        <div class="row">
+          <h1 class="display-4">{{message}}</h1>
+          <hr class="my-4">
+        </div>
+      {{/if}}
     </div>
     {{>footinit}}
   </body>

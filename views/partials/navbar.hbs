@@ -1,75 +1,24 @@
-<!-- navbar -->
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-  <span class="navbar-brand">Home</span>
+  <span class="navbar-brand">{{siteName}}</span>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
     <div class="navbar-nav">
-      <div class="navbar-nav" id="login-logout"></div>
-      <a class="nav-item nav-link" href="/">Home</a>
-      <a class="nav-item nav-link" href="/products">Products</a>
-      <a class="nav-item nav-link" href="/add">Add</a>
+      {{#if user}}
+        <a class="nav-item nav-link" href="#">{{username}}</a>
+        <a class="nav-item nav-link btn btn-danger" href="/logout">Logout</a>
+        <a class="nav-item nav-link" href="/add">Add</a>
+        <a class="nav-item nav-link" href="/">Home</a>
+        <a class="nav-item nav-link" href="/products">Products</a>
+        <a class="nav-item nav-link" href="/search">Search</a>
+      {{else}}
+        <a class="nav-item nav-link" href="/login">Login</a>
+        <a class="nav-item nav-link btn btn-primary" href="/signup">Signup</a>
+        <a class="nav-item nav-link" href="/">Home</a>
+        <a class="nav-item nav-link" href="/products">Products</a>
+        <a class="nav-item nav-link" href="/search">Search</a>
+      {{/if}}
     </div>
   </div>
 </nav>
-
-<!-- Login modal -->
-<div class="modal fade" id="loginmodal" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Login</h5>
-        <button type="button" class="close" data-dismiss="modal" onclick="cleanlogin()">
-          <span>&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="form-group">
-          <label for="loginemail">Email</label>
-          <input type="email" class="form-control" id="loginemail" required>
-        </div>
-        <div class="form-group">
-            <label for="loginpass">Password</label>
-            <input type="password" class="form-control" id="loginpass" required>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" onclick="signIn()" data-dismiss="modal">Login</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Signup modal -->
-<div class="modal fade" id="signupmodal" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Signup</h5>
-        <button type="button" class="close" data-dismiss="modal" onclick="cleansignup()">
-          <span>&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="form-group">
-          <label for="loginemail">Email</label>
-          <input type="email" class="form-control" id="signupemail" onkeyup="checkpass(); return false" required>
-        </div>
-        <div class="form-group">
-            <label for="signuppass1">Password</label>
-            <input type="password" class="form-control" id="signuppass1" onkeyup="checkpass(); return false" required>
-        </div>
-        <div class="form-group">
-            <label for="signuppass2">Confirm Password</label>
-            <input type="password" class="form-control" id="signuppass2" onkeyup="checkpass(); return false" required>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <div id="signupbtn">
-          <button type="button" class="btn btn-primary disabled">Submit</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
