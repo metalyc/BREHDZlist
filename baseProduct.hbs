@@ -16,7 +16,7 @@
       </div>
       <hr>
       <div class="container">
-        <p><b>Location: </b><div id='location'>{{location}}</div></p>
+        <p><b>Location: </b>{{location}}</p>
       </div>
       <div class="container">
         <p><b>Condition: </b>{{condition}}</p>
@@ -56,7 +56,7 @@
         </div>
       </div>
     </div>
-
+    
 
 
 
@@ -70,7 +70,7 @@
       height: 85%;
       width: 85%;
     }
-
+  
     /* Optional: Makes the sample page fill the window. */
     html,
     body {
@@ -85,46 +85,9 @@
   <div id="map"></div>
   <script>
     var map;
-
-    var loc = document.getElementById('location').innerHTML;
-    console.log('Loaction is '+loc);
-    var latitude = 49.2827;
-    var longitude = -123.1207;
-
-    if(loc === 'Richmond')
-    {
-      latitude = 49.1666;
-      longitude = -123.1336;
-    }
-    else if (loc === 'Burnaby')
-    {
-      latitude = 49.250547;
-      longitude = -122.99282;
-    }
-    else if (loc === 'Surrey')
-    {
-      latitude = 49.1913;
-      longitude = -122.8490;
-    }
-    else if (loc === 'New Westminster')
-    {
-      latitude = 49.2057;
-      longitude = -122.9110;
-    }
-    else if (loc === 'Coquitlam')
-    {
-      latitude = 49.2838;
-      longitude = -122.7932;
-    }
-    else
-    {
-      latitude = 49.2827;
-      longitude = -123.1207;
-    }
-
     function initMap() {
       map = new google.maps.Map(document.getElementById('map'), {
-        center: { lat: latitude, lng: longitude },
+        center: { lat: 49.2505473, lng: -122.99282099999999 },
         zoom: 15
       });
     }
