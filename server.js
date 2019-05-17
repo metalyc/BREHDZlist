@@ -113,7 +113,8 @@ app.get('/products/:page', (req, res) => {
         email: doc.data().Email,
         phone: phone,
         human: false,
-        category: doc.data().Category
+        category: doc.data().Category,
+        description: doc.data().Description
       });
     } else {
       res.render('baseProduct.hbs', {
@@ -125,7 +126,8 @@ app.get('/products/:page', (req, res) => {
         email: doc.data().Email,
         phone: phone,
         human: true,
-        category: doc.data().Category
+        category: doc.data().Category,
+        description: doc.data().Description
       });
     }
   });
@@ -224,15 +226,8 @@ var db = firebase.firestore();
 //  console.log(db);
 
 const request = require('request');
-function addData(name, price, condition, location, image, phone, category, email) {
+function addData(name, price, condition, location, image, phone, category, email, description) {
   console.log(image);
-  var thename = name;
-  var theprice = price;
-  var thecondition = condition;
-  var thelocation = location;
-  var theImg = image;
-  var theNumber = phone;
-  var theCategory = category
   var encryptedphone = encrypt(phone);
   var decryptedphone = decrypt(encryptedphone);
 
@@ -253,7 +248,8 @@ function addData(name, price, condition, location, image, phone, category, email
         Phone: encryptedphone,
         Img: url,
         Category: category,
-        Email: email
+        Email: email,
+        Description: description
       }).then(function(docRef) {
         console.log("Document written with ID: ", docRef.id);
         console.log(encryptedphone);
@@ -280,7 +276,8 @@ app.post('/firebase', function(req, res) {
   var img = req.body.something;
   var phone = req.body.phone_number;
   var email = req.body.email;
-  var category=req.body.category;
+  var category = req.body.category;
+  var description = req.body.description;
   console.log(email);
   console.log(img);
 
@@ -298,7 +295,7 @@ app.post('/firebase', function(req, res) {
     }
     //res.json({"responseSuccess" : "Sucess"});
     else {
-      addData(name, price, condition, location, img, phone, category, email);
+      addData(name, price, condition, location, img, phone, category, email, description);
       res.redirect('/');
     }
   });
