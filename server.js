@@ -52,41 +52,41 @@ hbs.registerHelper('siteName', () => {
 //home page
 app.get('/', (req, res) => {
   flag = 0;
-    res.render('home.hbs', {
-        title: 'Home'
-    });
+  res.render('home.hbs', {
+      title: 'Home'
+  });
 });
 
 //product listing page
 app.get('/products', (req, res) => {
   flag = 0;
-    res.render('abc.hbs', {
-        title: 'Products'
-    });
+  res.render('abc.hbs', {
+      title: 'Products'
+  });
 });
 
 //add products page
 app.get('/add', (req, res) => {
   flag = 0;
-    res.render('add.hbs', {
-        title: 'Add a Product'
-    });
+  res.render('add.hbs', {
+      title: 'Add a Product'
+  });
 });
 
 //login page
 app.get('/login', (req, res) => {
   flag = 0;
-    res.render('login.hbs', {
-        title: 'Login'
-    });
+  res.render('login.hbs', {
+      title: 'Login'
+  });
 });
 
 //signup page
 app.get('/signup', (req, res) => {
   flag = 0;
-    res.render('signup.hbs', {
-        title: 'Signup'
-    });
+  res.render('signup.hbs', {
+      title: 'Signup'
+  });
 });
 
 //search page
@@ -415,6 +415,21 @@ app.get('/logout', (req, res) => {
 });
 
 /////////////////////////////
+//for testing purposes only//
+/////////////////////////////
+
+//deletes test account
+app.post('/testdelete', (req, res) => {
+  var email = "foo@bar.com";
+  var pass = "asdfgh";
+  firebase.auth().signInWithEmailAndPassword(email, pass)
+    .then(function() {
+      firebase.auth().currentUser.delete();
+      res.redirect("/");
+    });
+});
+
+/////////////////////////////
 //Place all code above here//
 /////////////////////////////
 
@@ -436,4 +451,3 @@ var server = app.listen(process.env.PORT || 8080, () => {
 /////////////////////////////////////////
 //Don't place code down here, scroll up//
 /////////////////////////////////////////
-
