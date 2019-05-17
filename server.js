@@ -325,12 +325,13 @@ app.post('/getcontact', (req, res) => {
 app.post('/search', function(req, res) {
   var proname = req.body.productname;
   var category=req.body.category;
+  var loc = req.body.location;
   var arr = [];
   var curUrl = req.params.page;
   var docRef = firebase.firestore().collection("Products").doc()
   firebase.firestore().collection("Products").get().then((querySnapshot) => {
     querySnapshot.forEach((doc) => {
-      if((search(proname, doc.data().Name)>=65 && category === doc.data().Category) || (search(proname, doc.data().Name)>=65 && category === '') || proname === '' && category === doc. data(). Category) {
+      if((search(proname, doc.data().Name)>=65 && category === doc.data().Category) || (search(proname, doc.data().Name)>=65 && category === '') || proname === '' && category === doc. data().Category || loc === doc.data().Location && proname === '' || loc === doc.data().Location && search(proname, doc.data().Name)>=65) {
         //var tablename=Math.random();
         var tablename='hello';
         console.log('hello');
@@ -473,7 +474,7 @@ app.get('*', (req, res) => {
 
 //start server
 app.use(express.static(__dirname));
-var server = app.listen(process.env.PORT || 8080, () => {
+var server = app.listen(process.env.PORT || 8000, () => {
     console.log('server is listening on port', server.address().port);
 });
 
