@@ -417,18 +417,50 @@ app.get('/logout', (req, res) => {
 /////////////////////////////
 //for testing purposes only//
 /////////////////////////////
-
+/*
 //deletes test account
 app.post('/testdelete', (req, res) => {
   var email = "foo@bar.com";
   var pass = "asdfgh";
-  firebase.auth().signInWithEmailAndPassword(email, pass)
+  var authRef = firebase.auth();
+  var worked = false;
+  authRef.signInWithEmailAndPassword(email, pass)
     .then(function() {
-      firebase.auth().currentUser.delete();
-      res.redirect("/");
+      console.log(authRef.currentUser['email']);
+      authRef.currentUser.delete()
+        .then(function() {
+          authRef.EmailAuthProvider(email)
+          .catch(function(error) {
+            worked = true;
+          })
+      });
     });
 });
 
+module.exports = {
+  deleteTest: function() {
+    var email = "foo@bar.com";
+    var pass = "asdfgh";
+    console.log(email);
+    var authRef = firebase.auth();
+    console.log(authRef);
+    authRef.signInWithEmailAndPassword(email, pass)
+      .then(function() {
+        console.log(authRef.currentUser['email']);
+        authRef.currentUser.delete()
+          .then(function() {
+            authRef.EmailAuthProvider(email)
+            .then(function() {
+              return false;
+            })
+            .catch(function(error) {
+              return true;
+            })
+        });
+      });
+    }
+};
+*/
 /////////////////////////////
 //Place all code above here//
 /////////////////////////////
