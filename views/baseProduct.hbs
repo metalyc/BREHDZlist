@@ -12,29 +12,36 @@
       <h1 class="container">{{name}}</h1>
       <hr>
       <div class="container">
-        <img src="{{img}}" alt="A picture of {{name}}" style="max-height: 600px; height: 100%; width: auto;">
+        <img src="{{img}}" alt="A picture of {{name}}" style="max-height: 600px; width: auto;">
       </div>
       <hr>
-      <div class="container">
-        <p><strong>Location: </strong><div id='location'>{{location}}</div></p>
-      </div>
-      <div class="container">
-        <p><strong>Condition: </strong>{{condition}}</p>
-      </div>
-      <div class="container">
-        <p><strong>Category: </strong>{{category}}</p>
-      </div>
-      <div class="container">
-        <p><strong>Description:</strong></p>
-        <p>{{description}}</p>
-      </div>
-      <div class="container card">
-        {{#if human}}
-          <p class="container"><strong>Phone: </strong>{{phone}}</p> <!--style="background: grey; float: right; padding: 5px; margin-top: 20px"-->
-          <p class="container"><strong>Email: </strong>{{email}}</p>
-        {{else}}
-          <p class="container"><strong>Contact info: </strong><a type="button" data-toggle="modal" data-target="#exampleModal"><u style="color: blue;">Click to show</u></a></p>
-        {{/if}}
+      <div class="row">
+        <div class="col-sm">
+          <div class="container">
+            <p><strong>Location: </strong>{{location}}</p>
+          </div>
+          <div class="container">
+            <p><strong>Condition: </strong>{{condition}}</p>
+          </div>
+          <div class="container">
+            <p><strong>Category: </strong>{{category}}</p>
+          </div>
+          <div class="container">
+            <p><strong>Description:</strong></p>
+            <p>{{description}}</p>
+          </div>
+          <div class="container card">
+            {{#if human}}
+              <p class="container"><strong>Phone: </strong>{{phone}}</p> <!--style="background: grey; float: right; padding: 5px; margin-top: 20px"-->
+              <p class="container"><strong>Email: </strong>{{email}}</p>
+            {{else}}
+              <p class="container"><strong>Contact info: </strong><a type="button" data-toggle="modal" data-target="#exampleModal"><u style="color: blue;">Click to show</u></a></p>
+            {{/if}}
+          </div>
+        </div>
+        <div class="col-sm">
+            <div id="map"></div>
+        </div>
       </div>
     </div>
 
@@ -62,100 +69,86 @@
     </div>
 
 
+    <div hidden id="location">{{location}}</div>
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+           * element that contains the map. */
+      #map {
+        height: 85%;
+        width: 85%;
+      }
 
-
-
-
-
-  <style>
-    /* Always set the map height explicitly to define the size of the div
-         * element that contains the map. */
-    #map {
-      height: 85%;
-      width: 85%;
-    }
-
-    /* Optional: Makes the sample page fill the window. */
-    html,
-    body {
-      height: 85%;
-      width: 85%;
-      margin: 0;
-      padding: 0;
-    }
-  </style>
-
-
-  <div id="map"></div>
-  <script>
-    var map;
-
-    var loc = document.getElementById('location').innerHTML;
-    console.log('Loaction is '+loc);
-    var latitude = 49.2827;
-    var longitude = -123.1207;
-
-    if(loc === 'Richmond')
-    {
-      latitude = 49.1666;
-      longitude = -123.1336;
-    }
-    else if (loc === 'Burnaby')
-    {
-      latitude = 49.250547;
-      longitude = -122.99282;
-    }
-    else if (loc === 'Surrey')
-    {
-      latitude = 49.1913;
-      longitude = -122.8490;
-    }
-    else if (loc === 'New Westminster')
-    {
-      latitude = 49.2057;
-      longitude = -122.9110;
-    }
-    else if (loc === 'Coquitlam')
-    {
-      latitude = 49.2838;
-      longitude = -122.7932;
-    }
-    else
-    {
-      latitude = 49.2827;
-      longitude = -123.1207;
-    }
-
-    function initMap() {
-      map = new google.maps.Map(document.getElementById('map'), {
-        center: { lat: latitude, lng: longitude },
-        zoom: 15
-      });
-    }
-  </script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAN-n2VOlSX6gEI-ZFx3mUUtEh5U-j8Vh8&callback=initMap" async
-    defer></script>
-
-
-
-
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js"></script>
+      /* Optional: Makes the sample page fill the window. */
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+      }
+    </style>
     <script>
-    $(document).ready(function() {
-      $('#comment_form').submit(function() {
-        $(this).ajaxSubmit({
-          error: function(xhr) {
-            status('Error: ' + xhr.status);
-          },
-         success: function(response) {
-          console.log(response);
-         }
+      var map;
+
+      var loc = document.getElementById('location').innerHTML;
+      console.log('Loaction is '+loc);
+      var latitude = 49.2827;
+      var longitude = -123.1207;
+
+      if(loc === 'Richmond')
+      {
+        latitude = 49.1666;
+        longitude = -123.1336;
+      }
+      else if (loc === 'Burnaby')
+      {
+        latitude = 49.250547;
+        longitude = -122.99282;
+      }
+      else if (loc === 'Surrey')
+      {
+        latitude = 49.1913;
+        longitude = -122.8490;
+      }
+      else if (loc === 'New Westminster')
+      {
+        latitude = 49.2057;
+        longitude = -122.9110;
+      }
+      else if (loc === 'Coquitlam')
+      {
+        latitude = 49.2838;
+        longitude = -122.7932;
+      }
+      else
+      {
+        latitude = 49.2827;
+        longitude = -123.1207;
+      }
+
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: { lat: latitude, lng: longitude },
+          zoom: 15
         });
-        //Very important line, it disable the page refresh.
-        return false;
+      }
+      </script>
+      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAN-n2VOlSX6gEI-ZFx3mUUtEh5U-j8Vh8&callback=initMap" async defer></script>
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+      <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js"></script>
+      <script>
+      $(document).ready(function() {
+        $('#comment_form').submit(function() {
+          $(this).ajaxSubmit({
+            error: function(xhr) {
+              status('Error: ' + xhr.status);
+            },
+           success: function(response) {
+            console.log(response);
+           }
+          });
+          //Very important line, it disable the page refresh.
+          return false;
+        });
       });
-    });
     </script>
     {{>footinit}}
   </body>
