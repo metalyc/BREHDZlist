@@ -331,10 +331,8 @@ app.post('/search', function(req, res) {
   var docRef = firebase.firestore().collection("Products").doc()
   firebase.firestore().collection("Products").get().then((querySnapshot) => {
     querySnapshot.forEach((doc) => {
-      if((search(proname, doc.data().Name)>=65 && category === doc.data().Category) || (search(proname, doc.data().Name)>=65 && category === '') || proname === '' && category === doc. data().Category || loc === doc.data().Location && proname === '' || loc === doc.data().Location && search(proname, doc.data().Name)>=65) {
-        //var tablename=Math.random();
-        var tablename='hello';
-        console.log('hello');
+      if((search(proname, doc.data().Name)>=65) && loc === doc.data().Location && category === doc.data().Category)
+      {
         var name=doc.data().Name;
         //var price=req.body.price;
         var condition=doc.data().Condition;
@@ -345,6 +343,90 @@ app.post('/search', function(req, res) {
         var id = doc._key.path.segments[6];
         arr.push({Price: price, Name: name, Condition: condition, Location: location, Img: img, id:id , Category:category1});
       }
+      else if((proname === '') && loc === doc.data().Location && category === doc.data().Category)
+      {
+        var name=doc.data().Name;
+        //var price=req.body.price;
+        var condition=doc.data().Condition;
+        var location= doc.data().Location;
+        var img =  doc.data().Img;
+        var price = doc.data().Price;
+        var category1 = doc.data().Category;
+        var id = doc._key.path.segments[6];
+        arr.push({Price: price, Name: name, Condition: condition, Location: location, Img: img, id:id , Category:category1});
+      }
+      else if((search(proname, doc.data().Name)>=65) && loc === '' && category === doc.data().Category)
+      {
+        var name=doc.data().Name;
+        //var price=req.body.price;
+        var condition=doc.data().Condition;
+        var location= doc.data().Location;
+        var img =  doc.data().Img;
+        var price = doc.data().Price;
+        var category1 = doc.data().Category;
+        var id = doc._key.path.segments[6];
+        arr.push({Price: price, Name: name, Condition: condition, Location: location, Img: img, id:id , Category:category1});
+      }
+      else if((search(proname, doc.data().Name)>=65) && loc === doc.data().Location && category === '')
+      {
+        var name=doc.data().Name;
+        //var price=req.body.price;
+        var condition=doc.data().Condition;
+        var location= doc.data().Location;
+        var img =  doc.data().Img;
+        var price = doc.data().Price;
+        var category1 = doc.data().Category;
+        var id = doc._key.path.segments[6];
+        arr.push({Price: price, Name: name, Condition: condition, Location: location, Img: img, id:id , Category:category1});
+      }
+      else if((search(proname, doc.data().Name)>=65) && loc === '' && category === '')
+      {
+        var name=doc.data().Name;
+        //var price=req.body.price;
+        var condition=doc.data().Condition;
+        var location= doc.data().Location;
+        var img =  doc.data().Img;
+        var price = doc.data().Price;
+        var category1 = doc.data().Category;
+        var id = doc._key.path.segments[6];
+        arr.push({Price: price, Name: name, Condition: condition, Location: location, Img: img, id:id , Category:category1});
+      }
+      else if(proname == '' && loc === doc.data().Location && category === '')
+      {
+        var name=doc.data().Name;
+        //var price=req.body.price;
+        var condition=doc.data().Condition;
+        var location= doc.data().Location;
+        var img =  doc.data().Img;
+        var price = doc.data().Price;
+        var category1 = doc.data().Category;
+        var id = doc._key.path.segments[6];
+        arr.push({Price: price, Name: name, Condition: condition, Location: location, Img: img, id:id , Category:category1});
+      }
+      else if(proname === '' && loc === '' && category === doc.data().Category)
+      {
+        var name=doc.data().Name;
+        //var price=req.body.price;
+        var condition=doc.data().Condition;
+        var location= doc.data().Location;
+        var img =  doc.data().Img;
+        var price = doc.data().Price;
+        var category1 = doc.data().Category;
+        var id = doc._key.path.segments[6];
+        arr.push({Price: price, Name: name, Condition: condition, Location: location, Img: img, id:id , Category:category1});
+      }
+
+
+
+
+
+
+
+        //var tablename=Math.random();
+
+
+
+
     });
     console.log(arr);
     res.render('results.hbs', {
