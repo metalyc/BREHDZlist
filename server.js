@@ -473,7 +473,7 @@ app.get('*', (req, res) => {
 
 //start server
 app.use(express.static(__dirname));
-var server = app.listen(process.env.PORT || 8080, () => {
+var server = app.listen(process.env.PORT || 8000, () => {
     console.log('server is listening on port', server.address().port);
 });
 
