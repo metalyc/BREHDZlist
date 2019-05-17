@@ -12,22 +12,21 @@
       <h1 class="container">{{name}}</h1>
       <hr>
       <div class="container">
-        <img src="{{img}}" alt="A picture of {{name}}" style="max-height: 600px; height: 100%; width: auto;">
+        <img src="{{img}}" alt="A picture of {{name}}" style="max-height: 400px;width: auto;">
       </div>
       <hr>
       <div class="container">
         <p><strong>Location: </strong><div id='location'>{{location}}</div></p>
       </div>
+      <br>
       <div class="container">
         <p><strong>Condition: </strong>{{condition}}</p>
       </div>
+      <br>
       <div class="container">
         <p><strong>Category: </strong>{{category}}</p>
       </div>
-      <div class="container">
-        <p><strong>Description:</strong></p>
-        <p>{{description}}</p>
-      </div>
+      <br>
       <div class="container card">
         {{#if human}}
           <p class="container"><strong>Phone: </strong>{{phone}}</p> <!--style="background: grey; float: right; padding: 5px; margin-top: 20px"-->
