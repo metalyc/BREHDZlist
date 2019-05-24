@@ -53,29 +53,9 @@
                    element.addEventListener('input', function () {
                        var val = password.value;
                        var result = zxcvbn(val);
-
                        // Update the password strength meter
-                       //console.log(result.score);
                        meter.src="images/"+result.score+".png";
                        meter.alt="Password score is "+result.score;
-               //         var email_exp = /\S+@\S+\.\S+/
-               //         {{!--register.disabled = (result.score <= 2 || email.value == '') //Password Strength => 3, Email != blank --}}
-               //         register.disabled = (result.score <= 2 || !email_exp.test(email.value)) //Password Strength => 3, Email != blank
-               //
-               //         // Update the text indicator
-               //         if (val !== "") {
-               //             pwstr.innerHTML = "Strength: " + strength[result.score];
-               //             if (result.score <= 2){
-               //                 pwrst.innerHTML = result.feedback.warning + ' | ' + result.feedback.suggestions;
-               //             } else {
-               //                 pwrst.innerHTML = "";
-               //             }
-               //         } else {
-               //             pwstr.innerHTML = "";
-               //             pwrst.innerHTML = "";
-               //         }
-               //     });
-               // });
              });
            });
            </script>
