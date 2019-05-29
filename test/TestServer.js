@@ -1,4 +1,3 @@
-const request = require('supertest');
 const mocha = require('mocha')
 const assert = require('chai').assert;
 const expect = require('chai').expect;
@@ -6,12 +5,6 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 chai.use(chaiHttp);
 const app = require('../server.js');
-const test = require('firebase-functions-test')({
-    databaseURL: "https://bhredz.firebaseio.com",
-    projectId: "bhredz",
-    storageBucket: "bhredz.appspot.com"
-}, '../bhredz-9315a3dadb11.json');
-const admin = require("firebase-admin")
 
 describe('Check Page Avaliablity Tests', function () {
   it("404", function (done) {
@@ -115,30 +108,4 @@ describe('Firebase Authentication tests', function () {
         done();
       });
   });
-  /*
-  it('Delete created user (clean up)', function () {
-    assert.strictEqual(app.deleteTest, true);
-  });*/
 });
-
-
-/*
-describe('Firebase Database Tests', function () {
-  it('Add data to products', function (done) {
-    chai.request('http://localhost:8080')
-      .post('/firebase')
-      .send({
-        name: "test",
-        price: "1",
-        condition: "test",
-        location: "test",
-        phone: "555-555-5555",
-        img: "test.png"
-      })
-      .end(function(err, res) {
-        expect(res).to.have.status(200);
-        done();
-      });
-  });
-});
-*/

@@ -1,33 +1,27 @@
 .footer {
-
   background-color: #f0f0f0;
   color: #707070;
 }
-#products
-{
+#products {
   margin-bottom: 200px;
 }
-form{
+form {
   margin-bottom: 450px;
 }
-label
-{
+label {
   margin: 1%;
 }
-.first{
+.first {
   margin-top:  30px;
 }
-
-.email{
+.email {
   margin-top: 30px;
 }
 
 #logo {
   margin: -18px;
 }
-.card
-{
+.card {
   border: solid black 2px;
   cursor: pointer;
-
 }

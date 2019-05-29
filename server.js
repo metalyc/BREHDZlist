@@ -2,7 +2,6 @@ const express = require('express');
 var app = express();
 const hbs = require('hbs');
 const firebase = require('firebase');
-//const admin = require("firebase-admin");
 const bodyParser = require('body-parser');
 const expressValidator = require('express-validator');
 var app = express();
@@ -23,14 +22,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
 }));
-
-/*
-const serviceAccount = require("./bhredz-firebase-adminsdk-7nele-5f8b818b8b.json");
-admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-    databaseURL: "https://bhredz.firebaseio.com"
-});
-*/
 
 ///////////
 //helpers//
@@ -145,11 +136,9 @@ function search(w1, w2)
     console.log(w1, w2);
     let ch,c,maxc=0;
     let i,j;
-
     for(i=0;i<l1;i++)
     {
         ch = w1.charAt(i);
-
         for(j=0;j<l2;j++)
         {
             if(ch.toUpperCase() === w2.charAt(j).toUpperCase())
@@ -167,27 +156,18 @@ function search(w1, w2)
                         c--;
                         break;
                     }
-
                 }
-
-
             }
-
-
             if(c>maxc)
             {
                 maxc = c;
             }
-
         }
     }
     let perc_match = maxc/l1*100;
     console.log(perc_match)
     return perc_match;
 }
-
-//console.log(search('test', 'new test'));
-
 
 //for encrypting phone numbers before posting to firebase
 function encrypt(phone) {
@@ -223,22 +203,16 @@ var config = {
 };
 var fb = firebase.initializeApp(config);
 var db = firebase.firestore();
-//  console.log(db);
-
 const request = require('request');
 function addData(name, price, condition, location, image, phone, category, email, description) {
   console.log(image);
   var encryptedphone = encrypt(phone);
   var decryptedphone = decrypt(encryptedphone);
-
   function getImageForPath(p){
-    //console.log(p);
     global.XMLHttpRequest = require('xhr2');
     var storageRef = firebase.storage().ref();
     var spaceRef = storageRef.child(p);
     storageRef.child(p).getDownloadURL().then(function(url) {
-      //console.log(db.collection("Products"));
-      //var fullurl = url;
       console.log('hello');
       db.collection("Products").add({
         Price: price,
@@ -254,13 +228,10 @@ function addData(name, price, condition, location, image, phone, category, email
         console.log("Document written with ID: ", docRef.id);
         console.log(encryptedphone);
         console.log(decryptedphone);
-        //update the products view
-        //getProducts();
       }).catch(function(error) {
         console.error("Error adding document: ", error);
       });
     }).catch(function(error) {
-      //catch error here
       console.log(error);
     });
   }
@@ -346,7 +317,6 @@ app.post('/search', function(req, res) {
       else if((proname === '') && loc === doc.data().Location && category === doc.data().Category)
       {
         var name=doc.data().Name;
-        //var price=req.body.price;
         var condition=doc.data().Condition;
         var location= doc.data().Location;
         var img =  doc.data().Img;
@@ -358,7 +328,6 @@ app.post('/search', function(req, res) {
       else if((search(proname, doc.data().Name)>=65) && loc === '' && category === doc.data().Category)
       {
         var name=doc.data().Name;
-        //var price=req.body.price;
         var condition=doc.data().Condition;
         var location= doc.data().Location;
         var img =  doc.data().Img;
@@ -370,7 +339,6 @@ app.post('/search', function(req, res) {
       else if((search(proname, doc.data().Name)>=65) && loc === doc.data().Location && category === '')
       {
         var name=doc.data().Name;
-        //var price=req.body.price;
         var condition=doc.data().Condition;
         var location= doc.data().Location;
         var img =  doc.data().Img;
@@ -382,7 +350,6 @@ app.post('/search', function(req, res) {
       else if((search(proname, doc.data().Name)>=65) && loc === '' && category === '')
       {
         var name=doc.data().Name;
-        //var price=req.body.price;
         var condition=doc.data().Condition;
         var location= doc.data().Location;
         var img =  doc.data().Img;
@@ -394,7 +361,6 @@ app.post('/search', function(req, res) {
       else if(proname == '' && loc === doc.data().Location && category === '')
       {
         var name=doc.data().Name;
-        //var price=req.body.price;
         var condition=doc.data().Condition;
         var location= doc.data().Location;
         var img =  doc.data().Img;
@@ -406,7 +372,6 @@ app.post('/search', function(req, res) {
       else if(proname === '' && loc === '' && category === doc.data().Category)
       {
         var name=doc.data().Name;
-        //var price=req.body.price;
         var condition=doc.data().Condition;
         var location= doc.data().Location;
         var img =  doc.data().Img;
@@ -415,18 +380,6 @@ app.post('/search', function(req, res) {
         var id = doc._key.path.segments[6];
         arr.push({Price: price, Name: name, Condition: condition, Location: location, Img: img, id:id , Category:category1});
       }
-
-
-
-
-
-
-
-        //var tablename=Math.random();
-
-
-
-
     });
     console.log(arr);
     res.render('results.hbs', {
@@ -468,7 +421,6 @@ app.post('/actionlogin', (req, res) => {
 
   firebase.auth().signInWithEmailAndPassword(email, pass)
   .then(function() {
-    //console.log("logged in with", email);
     app.locals.user = true;
     hbs.registerHelper('username', () => {
       return email;
@@ -489,7 +441,6 @@ app.post('/actionlogin', (req, res) => {
 app.get('/logout', (req, res) => {
   firebase.auth().signOut()
   .then(function() {
-    //console.log("Signed out.");
     app.locals.user = false;
     res.redirect('/');
   })
@@ -498,53 +449,6 @@ app.get('/logout', (req, res) => {
   });
 });
 
-/////////////////////////////
-//for testing purposes only//
-/////////////////////////////
-/*
-//deletes test account
-app.post('/testdelete', (req, res) => {
-  var email = "foo@bar.com";
-  var pass = "asdfgh";
-  var authRef = firebase.auth();
-  var worked = false;
-  authRef.signInWithEmailAndPassword(email, pass)
-    .then(function() {
-      console.log(authRef.currentUser['email']);
-      authRef.currentUser.delete()
-        .then(function() {
-          authRef.EmailAuthProvider(email)
-          .catch(function(error) {
-            worked = true;
-          })
-      });
-    });
-});
-
-module.exports = {
-  deleteTest: function() {
-    var email = "foo@bar.com";
-    var pass = "asdfgh";
-    console.log(email);
-    var authRef = firebase.auth();
-    console.log(authRef);
-    authRef.signInWithEmailAndPassword(email, pass)
-      .then(function() {
-        console.log(authRef.currentUser['email']);
-        authRef.currentUser.delete()
-          .then(function() {
-            authRef.EmailAuthProvider(email)
-            .then(function() {
-              return false;
-            })
-            .catch(function(error) {
-              return true;
-            })
-        });
-      });
-    }
-};
-*/
 /////////////////////////////
 //Place all code above here//
 /////////////////////////////
@@ -560,7 +464,7 @@ app.get('*', (req, res) => {
 
 //start server
 app.use(express.static(__dirname));
-var server = app.listen(process.env.PORT || 8000, () => {
+var server = app.listen(process.env.PORT || 8080, () => {
     console.log('server is listening on port', server.address().port);
 });
 
