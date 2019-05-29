@@ -152,14 +152,14 @@ function search(w1, w2)
 
         for(j=0;j<l2;j++)
         {
-            if(ch === w2.charAt(j))
+            if(ch.toUpperCase() === w2.charAt(j).toUpperCase())
             {
                 c=1;
                 tempi = i;
                 tempj = j;
 
 
-                while (w1.charAt(++tempi) === w2.charAt(++tempj))
+                while (w1.charAt(++tempi).toUpperCase() === w2.charAt(++tempj).toUpperCase())
                 {
                     c++;
                     if(tempi+1>l1 || tempj+1>l2)
@@ -221,7 +221,7 @@ var config = {
     storageBucket: "bhredz.appspot.com",
     messagingSenderId: "37106834429"
 };
-firebase.initializeApp(config);
+var fb = firebase.initializeApp(config);
 var db = firebase.firestore();
 //  console.log(db);
 
@@ -464,6 +464,8 @@ app.post('/newUser', (request, response) => {
 app.post('/actionlogin', (req, res) => {
   var email = req.body.email;
   var pass = req.body.pass;
+
+
   firebase.auth().signInWithEmailAndPassword(email, pass)
   .then(function() {
     //console.log("logged in with", email);
@@ -479,6 +481,8 @@ app.post('/actionlogin', (req, res) => {
       });
     console.log("Error with code:", error.code, "\nWith message:", error.message);
   });
+
+
 });
 
 //logout function
